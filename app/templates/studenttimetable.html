@@ -1,0 +1,126 @@
+<html>
+<head>
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700");
+    *, *:before, *:after {
+        box-sizing: border-box;
+    }
+
+    body{
+        background-color: #1b1b1b;
+        padding: 24px;
+        margin: 0;
+        font-family: 'Poppins',sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        overflow: hidden;
+    }
+    h1 {
+        position: absolute;
+        top: 15%;
+        color: #fff;
+        font-size: 3rem;
+        width: 100%;
+        left: 0;
+        text-align: center;
+    }
+
+    .container {
+        width: 100vw;
+        margin-right: auto;
+        margin-left: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .table-header {
+        display: flex;
+        width: 100%;
+        background: #000;
+        color: #fff;
+        padding: 18px 0;
+    }
+
+    .table-row {
+        display: flex;
+        width: 100%;
+    }
+    .table-row {
+        background: #EEEEEE;
+        border-bottom: solid 2px #000;
+    }
+
+    .table-data, .header__item {
+        flex: 1 1 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .table-data {
+        border-left: 1px solid #3f3f3f;
+        border-right: 1px solid #3f3f3f;
+        font-size: 0.7rem;     
+        padding: 18px 0;   
+    }
+
+    .table-data .highlight1 {
+        font-weight: 550;
+        background-color: rgb(63, 255, 63);
+    }
+    .table-data .highlight2 {
+        font-weight: 550;
+        background-color: rgb(221, 255, 0);
+    }
+
+    .header__item {
+        text-transform: uppercase;
+        font-size: 0.8rem;        
+    }
+</style>
+<title>{{ class }} Time Table</title>
+</head>
+<body>
+    <h1>Class: {{ class }}</h1>
+    <div class="container">
+        <div class="table">
+            <div class="table-header">
+                <div class="header__item">Day Order</div>
+                <div class="header__item">08:30 AM</div>
+                <div class="header__item">09:20 AM</div>
+                <div class="header__item">10:10 AM</div>
+                <div class="header__item">11:00 AM</div>
+                <div class="header__item">11:50 AM</div>
+                <div class="header__item">12:40 PM</div>
+                <div class="header__item">01:30 PM</div>
+                <div class="header__item">02:15 PM</div>
+                <div class="header__item">03:00 PM</div>
+            </div>
+            <div class="table-content">
+                <div class="table-row">		
+                    <div class="table-data">{{ dayorder }}</div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 1 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 2 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 3 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 4 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 5 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 6 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 7 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 8 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data"><p>{% for period in tt %}{% if period.Period == 9 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                </div>
+            </div>	
+        </div>
+    </div>
+</body>
+</html>

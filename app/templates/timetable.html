@@ -1,0 +1,167 @@
+<html>
+<head>
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700");
+    *, *:before, *:after {
+        box-sizing: border-box;
+    }
+
+    body{
+        background-color: #fff;
+        padding: 24px;
+        margin: 0;
+        font-family: 'Poppins',sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        overflow: hidden;
+    }
+    h1 {
+        position: absolute;
+        top: 2%;
+        color: #000;
+        font-size: 3rem;
+        width: 100%;
+        left: 0;
+        text-align: center;
+    }
+
+    .container {
+        width: 100vw;
+        margin-right: auto;
+        margin-left: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .table h2 {
+        text-align: center;
+    }
+
+    .table-header {
+        display: flex;
+        width: 100%;
+        background: #000;
+        color: #fff;
+        padding: 18px 0;
+    }
+
+    .table-row {
+        display: flex;
+        width: 100%;
+    }
+    .table-row {
+        background: #EEEEEE;
+        border-bottom: solid 2px #000;
+    }
+
+    .table-data, .header__item {
+        flex: 1 1 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .table-data {
+        border-left: 1px solid #3f3f3f;
+        border-right: 1px solid #3f3f3f;
+        font-size: 0.7rem;     
+        padding: 18px 0;   
+    }
+
+    .table-data .highlight1 {
+        font-weight: 550;
+        background-color: rgb(63, 255, 63);
+    }
+    .table-data .highlight2 {
+        font-weight: 550;
+        background-color: rgb(221, 255, 0);
+    }
+
+    .header__item {
+        text-transform: uppercase;
+        font-size: 0.8rem;        
+    }
+</style>
+<title>{{ class }} Time Table</title>
+</head>
+<body>
+    <h1>{{ class }}</h1>
+    <div class="container">
+        <div class="table">
+            <h2>Slot: {{ slot }}</h2>
+            <div class="table-header">
+                <div class="header__item">Day Order</div>
+                <div class="header__item">{% if slot == 'A' %}08:15 AM <br>- 09:30 AM{% else %}12:20 PM <br>- 01:35 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}09:30 AM <br>- 09:35 AM{% else %}01:35 PM <br>- 01:40 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}09:35 AM <br>- 10:50 AM{% else %}01:40 PM <br>- 02:55 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}10:50 AM <br>- 11:00 AM{% else %}02:55 PM <br>- 03:05 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}11:00 AM <br>- 12:15 PM{% else %}03:05 PM <br>- 04:20 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}12:15 PM <br>- 12:20 PM{% else %}04:20 PM <br>- 04:25 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}12:20 PM <br>- 01:35 PM{% else %}04:25 PM <br>- 05:40 PM{% endif %}</div>
+            </div>
+            <div class="table-content">
+                <div class="table-row" {% if order == 1 %}style="background-color: #00FFFF;"{% endif %}>		
+                    <div class="table-data">1</div>
+                    <div class="table-data"><p>{% for period in do1 %}{% if period.Period == 1 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do1 %}{% if period.Period == 3 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do1 %}{% if period.Period == 5 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do1 %}{% if period.Period == 7 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                </div>
+                <div class="table-row" {% if order == 2 %}style="background-color: #00FFFF;"{% endif %}>		
+                    <div class="table-data">2</div>
+                    <div class="table-data"><p>{% for period in do2 %}{% if period.Period == 1 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do2 %}{% if period.Period == 3 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do2 %}{% if period.Period == 5 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do2 %}{% if period.Period == 7 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                </div>
+                <div class="table-row" {% if order == 3 %}style="background-color: #00FFFF;"{% endif %}>		
+                    <div class="table-data">3</div>
+                    <div class="table-data"><p>{% for period in do3 %}{% if period.Period == 1 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do3 %}{% if period.Period == 3 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do3 %}{% if period.Period == 5 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do3 %}{% if period.Period == 7 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                </div>
+                <div class="table-row" {% if order == 4 %}style="background-color: #00FFFF;"{% endif %}>		
+                    <div class="table-data">4</div>
+                    <div class="table-data"><p>{% for period in do4 %}{% if period.Period == 1 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do4 %}{% if period.Period == 3 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do4 %}{% if period.Period == 5 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do4 %}{% if period.Period == 7 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                </div>
+                <div class="table-row" {% if order == 5 %}style="background-color: #00FFFF;"{% endif %}>		
+                    <div class="table-data">5</div>
+                    <div class="table-data"><p>{% for period in do5 %}{% if period.Period == 1 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do5 %}{% if period.Period == 3 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do5 %}{% if period.Period == 5 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><p>{% for period in do5 %}{% if period.Period == 7 %}<strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                </div>
+            </div>	
+        </div>
+    </div>
+</body>
+</html>

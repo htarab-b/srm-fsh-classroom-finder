@@ -1,0 +1,276 @@
+<html>
+<head>
+    <style>
+        body{
+            background-color: #1b1b1b;
+            padding: 24px;
+            margin: 0;
+            font-family: 'Poppins',sans-serif;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        h1 {
+            position: absolute;
+            top: 10%;
+            color: #fff;
+        }
+
+        h2 {
+            position: absolute;
+            top: 12%;
+            left: 3%;
+            font-weight: 100;
+            font-size: 1.3rem;
+        }
+        h2 a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #245dc7;
+            padding: 10px 20px;
+            transition: 0.5s ease;
+            border-radius: 5px;
+        }
+        h2 a:hover {
+            color: #245dc7;
+            background-color: #fff;
+        }
+        .links {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .links a {
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin: 2px;
+            text-decoration: none;
+            background-color: #000;
+            color: #fff;
+            border: 2px solid transparent;
+            transition: 0.4s ease;
+        }
+        .links a:hover {
+            background-color: #245dc7;
+        }
+        .links .current {
+            background-color: #245dc7;
+            border: 2px solid #b2b2b2;
+        }
+
+        .container1 {
+            position: absolute;
+            width: 95vw;
+            top: 20%;
+            margin-right: auto;
+            margin-left: auto;
+            display: flex;
+            justify-content: center;
+            height: 20vh;
+        }
+        .container2 {
+            position: absolute;
+            width: 95vw;
+            top: 60%;
+            margin-right: auto;
+            margin-left: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        .table-header {
+            display: flex;
+            width: 100%;
+            background: #000;
+            color: #fff;
+            padding: 18px 0;
+        }
+
+        .table-row {
+            display: flex;
+            width: 100%;
+        }
+        .table-row {
+            background: #EEEEEE;
+            border-bottom: solid 2px #000;
+        }
+
+        .table-data, .header__item {
+            flex: 1 1 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .table-data {
+            border-left: 1px solid #3f3f3f;
+            border-right: 1px solid #3f3f3f;
+            font-size: 0.7rem;        
+            padding: 18px 0;
+        }
+
+        .table-data .highlight2 {
+            background-color: rgb(63, 255, 63);
+        }
+        .table-data .classnamehighlight {
+            font-size: 140%;
+        }
+
+        .header__item {
+            text-transform: uppercase;
+            font-size: 0.8rem;        
+        }
+
+        .table-row input {
+            width: 90%;
+            font-size: 1.2em;
+            text-align: center;
+            font-family: 'Poppins',sans-serif;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .table-row a {
+            text-decoration: none;
+            color: #ff0000;
+        }
+    </style>
+    {% if Error %}
+        <script>alert('{{ Error }} not available')</script>
+    {% endif %}
+    <title>Classroom Finder - Editor</title>
+</head>
+<body>
+    <div class="links">
+        <a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=1" {% if Order == '1' %}class='current'{% endif %}>Day Order 1</a>
+        <a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=2" {% if Order == '2' %}class='current'{% endif %}>Day Order 2</a>
+        <a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=3" {% if Order == '3' %}class='current'{% endif %}>Day Order 3</a>
+        <a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=4" {% if Order == '4' %}class='current'{% endif %}>Day Order 4</a>
+        <a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=5" {% if Order == '5' %}class='current'{% endif %}>Day Order 5</a>
+    </div>
+    <h1>Slot: {{ slot }}</h1>
+    <h2><a href="{% url 'editor' %}">Back</a>
+    <a href="{% url 'subjecteditor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Slot={{ class.Slot }}">Subject Editor</a></h2>
+    <div class="container1">
+        <div class="table">
+            <div class="table-header">
+                <div class="header__item">Class</div>
+                <div class="header__item">{% if slot == 'A' %}08:15 AM - 09:30 AM{% else %}12:20 PM - 01:35 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}09:30 AM - 09:35 AM{% else %}01:35 PM - 01:40 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}09:35 AM - 10:50 AM{% else %}01:40 PM - 02:55 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}10:50 AM - 11:00 AM{% else %}02:55 PM - 03:05 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}11:00 AM - 12:15 PM{% else %}03:05 PM - 04:20 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}12:15 PM - 12:20 PM{% else %}04:20 PM - 04:25 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}12:20 PM - 01:35 PM{% else %}04:25 PM - 05:40 PM{% endif %}</div>
+            </div>
+            <div class="table-content">
+                <datalist id="Staffs">
+                    {% for i in form.Subject %}
+                        <option>{{i}}</option>
+                    {% endfor %}
+                </datalist>
+                <div class="table-row">		
+                    <div class="table-data"><strong class="classnamehighlight">{{ class }}</strong></div>
+
+                    <div class="table-data">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="Period" value="1">
+                            <p>Occupied Classrooms:<br>{% for period in periodlist %}{% if period.0 == 1 %}{{ period.1 }}, {% endif %}{% endfor %}</p>
+                            {% for t in tt %}{% if t.Period == 1 %}<input type="hidden" name="modify" value="Y">{% endif %}{% endfor %}
+                            <p><input type="text" name="ClassNo" placeholder="Classroom No" {% for t in tt %}{% if t.Period == 1 %}value="{{ t.ClassRoom }}"{% endif %}{% endfor %}>
+                            <input class="form-select" placeholder="Subject" name="Subject" type="text" list="Staffs" {% for t in tt %}{% if t.Period == 1 %}value="{{ t.Subject.Subject }}"{% endif %}{% endfor %}></p>
+                            <input type="submit" value="Add Period">
+                            <a href="{% url 'perioddelete' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order={{ Order }}&Slot={{ slot }}&Period=1">Delete Period</a>
+                        </form>
+                    </div>
+
+                    <div class="table-data" style="background-color: #C0C0C0; color: #000; font-size: 1rem;"><p>Break</p></div>
+
+                    <div class="table-data">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="Period" value="3">
+                            <p>Occupied Classrooms:<br>{% for period in periodlist %}{% if period.0 == 3 %}{{ period.1 }}, {% endif %}{% endfor %}</p>
+                            {% for t in tt %}{% if t.Period == 3 %}<input type="hidden" name="modify" value="Y">{% endif %}{% endfor %}
+                            <p><input type="text" name="ClassNo" placeholder="Classroom No" {% for t in tt %}{% if t.Period == 3 %}value="{{ t.ClassRoom }}"{% endif %}{% endfor %}>
+                            <input class="form-select" placeholder="Subject" name="Subject" type="text" list="Staffs" {% for t in tt %}{% if t.Period == 3 %}value="{{ t.Subject.Subject }}"{% endif %}{% endfor %}></p>
+                            <input type="submit" value="Add Period">
+                            <a href="{% url 'perioddelete' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order={{ Order }}&Slot={{ slot }}&Period=3">Delete Period</a>
+                        </form>
+                    </div>
+
+                    <div class="table-data" style="background-color: #C0C0C0; color: #000; font-size: 1rem;"><p>Break</p></div>
+
+                    <div class="table-data">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="Period" value="5">
+                            <p>Occupied Classrooms:<br>{% for period in periodlist %}{% if period.0 == 5 %}{{ period.1 }}, {% endif %}{% endfor %}</p>
+                            {% for t in tt %}{% if t.Period == 5 %}<input type="hidden" name="modify" value="Y">{% endif %}{% endfor %}
+                            <p><input type="text" name="ClassNo" placeholder="Classroom No" {% for t in tt %}{% if t.Period == 5 %}value="{{ t.ClassRoom }}"{% endif %}{% endfor %}>
+                            <input class="form-select" placeholder="Subject" name="Subject" type="text" list="Staffs" {% for t in tt %}{% if t.Period == 5 %}value="{{ t.Subject.Subject }}"{% endif %}{% endfor %}></p>
+                            <input type="submit" value="Add Period">
+                            <a href="{% url 'perioddelete' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order={{ Order }}&Slot={{ slot }}&Period=5">Delete Period</a>
+                        </form>
+                    </div>
+
+                    <div class="table-data" style="background-color: #C0C0C0; color: #000; font-size: 1rem;"><p>Break</p></div>
+
+                    <div class="table-data">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="Period" value="7">
+                            <p>Occupied Classrooms:<br>{% for period in periodlist %}{% if period.0 == 7 %}{{ period.1 }}, {% endif %}{% endfor %}</p>
+                            {% for t in tt %}{% if t.Period == 7 %}<input type="hidden" name="modify" value="Y">{% endif %}{% endfor %}
+                            <p><input type="text" name="ClassNo" placeholder="Classroom No" {% for t in tt %}{% if t.Period == 7 %}value="{{ t.ClassRoom }}"{% endif %}{% endfor %}>
+                            <input class="form-select" placeholder="Subject" name="Subject" type="text" list="Staffs" {% for t in tt %}{% if t.Period == 7 %}value="{{ t.Subject.Subject }}"{% endif %}{% endfor %}></p>
+                            <input type="submit" value="Add Period">
+                            <a href="{% url 'perioddelete' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order={{ Order }}&Slot={{ slot }}&Period=7">Delete Period</a>
+                        </form>
+                    </div>
+                </div>
+            </div>	
+        </div>
+    </div>
+
+    <div class="container2">
+        <div class="table">
+            <div class="table-header">
+                <div class="header__item">Staff</div>
+                <div class="header__item">{% if slot == 'A' %}08:15 AM - 09:30 AM{% else %}12:20 PM - 01:35 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}09:30 AM - 09:35 AM{% else %}01:35 PM - 01:40 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}09:35 AM - 10:50 AM{% else %}01:40 PM - 02:55 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}10:50 AM - 11:00 AM{% else %}02:55 PM - 03:05 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}11:00 AM - 12:15 PM{% else %}03:05 PM - 04:20 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}12:15 PM - 12:20 PM{% else %}04:20 PM - 04:25 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}12:20 PM - 01:35 PM{% else %}04:25 PM - 05:40 PM{% endif %}</div>
+            </div>
+            <div class="table-content">
+                {% for staff in staffs %}
+                    <div class="table-row">		
+                        <div class="table-data"><strong class="classnamehighlight">{{ staff.Name }}</strong></div>
+                        <div class="table-data">{% for period in stafftt %}<p {% if period.Class == class %}class='highlight2'{% endif %}>{% if period.Staff == staff and period.Period == 1 %}{{ period.ClassRoom }}<br><strong>{{ period.Class }}</strong><br> {{ period.Subject.Subject }}{% endif %}</p>{% endfor %}</div>
+                        <div class="table-data" style="background-color: #C0C0C0; color: #000; font-size: 1rem;"><p>Break</p></div>
+                        <div class="table-data">{% for period in stafftt %}<p {% if period.Class == class %}class='highlight2'{% endif %}>{% if period.Staff == staff and period.Period == 3 %}{{ period.ClassRoom }}<br><strong>{{ period.Class }}</strong><br> {{ period.Subject.Subject }}{% endif %}</p>{% endfor %}</div>
+                        <div class="table-data" style="background-color: #C0C0C0; color: #000; font-size: 1rem;"><p>Break</p></div>
+                        <div class="table-data">{% for period in stafftt %}<p {% if period.Class == class %}class='highlight2'{% endif %}>{% if period.Staff == staff and period.Period == 5 %}{{ period.ClassRoom }}<br><strong>{{ period.Class }}</strong><br> {{ period.Subject.Subject }}{% endif %}</p>{% endfor %}</div>
+                        <div class="table-data" style="background-color: #C0C0C0; color: #000; font-size: 1rem;"><p>Break</p></div>
+                        <div class="table-data">{% for period in stafftt %}<p {% if period.Class == class %}class='highlight2'{% endif %}>{% if period.Staff == staff and period.Period == 7 %}{{ period.ClassRoom }}<br><strong>{{ period.Class }}</strong><br> {{ period.Subject.Subject }}{% endif %}</p>{% endfor %}</div>
+                    </div>
+                {% endfor %}
+            </div>	
+        </div>
+    </div>
+</body>
+</html>
