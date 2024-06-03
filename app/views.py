@@ -166,7 +166,7 @@ class EditorView(LoginRequiredMixin , ListView):
 
         slot = classname.Slot
 
-        periodlist = Period.objects.filter(Order=order, Slot=slot).values_list('Period', 'ClassRoom')
+        periodlist = Period.objects.filter(Order=order, Slot=slot).values_list('Period', 'ClassRoom').distinct()
 
         classtt = Period.objects.filter(Class=classname, Order=order, Slot=slot)
         staffs = Staff.objects.filter(subject__Class=classname).distinct()
@@ -190,26 +190,50 @@ class EditorView(LoginRequiredMixin , ListView):
         if (flag_modify is None and Period.objects.filter(Order=order, Period=period, ClassRoom=classroom, Slot=slot).exists()):
             url = f"{reverse('editor')}?Programme={Programme}&Course={Course}&Year={Year}&Section={Section}&Order={order}&Error=Classroom"
             return redirect(url)
-        if (Period.objects.filter(Order=order, Period=period, Staff=Sub_Obj.Staff, Slot=slot).exists()):
+        if (Period.objects.filter(Order=order, Period=period, Staff=Sub_Obj.Staff, Slot=slot).exclude(Class=Class_Obj).exists()):
             url = f"{reverse('editor')}?Programme={Programme}&Course={Course}&Year={Year}&Section={Section}&Order={order}&Error=Staff"
             return redirect(url)
-        if (slot == 'A' and period == '7'):
-            TT_dup_Obj, created = Period.objects.get_or_create(Class=Class_Obj, Order=order, Period=1, Slot='B')
-            TT_dup_Obj.ClassRoom = classroom
-            TT_dup_Obj.Subject = Sub_Obj
-            TT_dup_Obj.Staff = Sub_Obj.Staff
-            TT_dup_Obj.save()
-        if (slot == 'B' and period == '1'):
-            TT_dup_Obj, created = Period.objects.get_or_create(Class=Class_Obj, Order=order, Period=7, Slot='A')
-            TT_dup_Obj.ClassRoom = classroom
-            TT_dup_Obj.Subject = Sub_Obj
-            TT_dup_Obj.Staff = Sub_Obj.Staff
-            TT_dup_Obj.save()
-        TT_Obj, created = Period.objects.get_or_create(Class=Class_Obj, Order=order, Period=period, Slot=slot)
-        TT_Obj.ClassRoom = classroom
-        TT_Obj.Subject = Sub_Obj
-        TT_Obj.Staff = Sub_Obj.Staff
-        TT_Obj.save()
+        if Sub_Obj.Type == "Elective":
+            class_list = Subject.objects.filter(Subject=Sub_Obj.Subject, Staff=Sub_Obj.Staff)
+            subj_list = Subject.objects.filter(Class=Class_Obj, Type="Elective")
+            classroom = str(classroom).split(',')
+            for i in range(len(subj_list)):
+                for classes in class_list:
+                    if (slot == 'A' and period == '7'):
+                        TT_dup_Obj = Period.objects.create(Class=classes.Class, Order=order, Period=1, Slot='B')
+                        TT_dup_Obj.ClassRoom = classroom[i]
+                        TT_dup_Obj.Subject = subj_list[i]
+                        TT_dup_Obj.Staff = subj_list[i].Staff
+                        TT_dup_Obj.save()
+                    if (slot == 'B' and period == '1'):
+                        TT_dup_Obj = Period.objects.create(Class=classes.Class, Order=order, Period=7, Slot='A')
+                        TT_dup_Obj.ClassRoom = classroom[i]
+                        TT_dup_Obj.Subject = subj_list[i]
+                        TT_dup_Obj.Staff = subj_list[i].Staff
+                        TT_dup_Obj.save()
+                    TT_Obj = Period.objects.create(Class=classes.Class, Order=order, Period=period, Slot=slot)
+                    TT_Obj.ClassRoom = classroom[i]
+                    TT_Obj.Subject = subj_list[i]
+                    TT_Obj.Staff = subj_list[i].Staff
+                    TT_Obj.save()
+        else:
+            if (slot == 'A' and period == '7'):
+                TT_dup_Obj, created = Period.objects.get_or_create(Class=Class_Obj, Order=order, Period=1, Slot='B')
+                TT_dup_Obj.ClassRoom = classroom
+                TT_dup_Obj.Subject = Sub_Obj
+                TT_dup_Obj.Staff = Sub_Obj.Staff
+                TT_dup_Obj.save()
+            if (slot == 'B' and period == '1'):
+                TT_dup_Obj, created = Period.objects.get_or_create(Class=Class_Obj, Order=order, Period=7, Slot='A')
+                TT_dup_Obj.ClassRoom = classroom
+                TT_dup_Obj.Subject = Sub_Obj
+                TT_dup_Obj.Staff = Sub_Obj.Staff
+                TT_dup_Obj.save()
+            TT_Obj, created = Period.objects.get_or_create(Class=Class_Obj, Order=order, Period=period, Slot=slot)
+            TT_Obj.ClassRoom = classroom
+            TT_Obj.Subject = Sub_Obj
+            TT_Obj.Staff = Sub_Obj.Staff
+            TT_Obj.save()
         url = f"{reverse('editor')}?Programme={Programme}&Course={Course}&Year={Year}&Section={Section}&Order={order}"
         return redirect(url)
     
@@ -243,7 +267,8 @@ class SubjectEditorView(LoginRequiredMixin, ListView):
         classroom = Class.objects.get(Programme=Programme, Course=Course, Year=Year, Section=Section, Slot=Slot)
         staffmail = request.POST.get('Staff')
         subject = request.POST.get('Subject')
-        Subject.objects.create(Class=classroom, Staff=Staff.objects.get(Email=staffmail), Subject=subject)
+        subjtype = request.POST.get('Type')
+        Subject.objects.create(Class=classroom, Staff=Staff.objects.get(Email=staffmail), Subject=subject, Type=subjtype)
         subjects = Subject.objects.filter(Class=classroom)
         return render(request, 'subjecteditor.html', {'form': SubjectEditorForm, 'message': 'Staff and Subject linked successfully', 'subjects': subjects, 'class': classroom})
     
@@ -258,12 +283,12 @@ class Period_Delete(LoginRequiredMixin, RedirectView):
         period = request.GET.get('Period')
         slot = request.GET.get('Slot')
         if (slot == 'A' and period == '7'):
-            Period_dup_Obj = Period.objects.get(Class=Class_Obj, Order=order, Period=1, Slot='B')
+            Period_dup_Obj = Period.objects.filter(Class=Class_Obj, Order=order, Period=1, Slot='B')
             Period_dup_Obj.delete()
         if (slot == 'B' and period == '1'):
-            Period_dup_Obj = Period.objects.get(Class=Class_Obj, Order=order, Period=7, Slot='A')
+            Period_dup_Obj = Period.objects.filter(Class=Class_Obj, Order=order, Period=7, Slot='A')
             Period_dup_Obj.delete()
-        Period_Obj = Period.objects.get(Class=Class_Obj, Order=order, Period=period, Slot=slot)
+        Period_Obj = Period.objects.filter(Class=Class_Obj, Order=order, Period=period, Slot=slot)
         Period_Obj.delete()
         url = f"{reverse('editor')}?Programme={Programme}&Course={Course}&Year={Year}&Section={Section}&Order={order}"
         return redirect(url)

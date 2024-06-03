@@ -43,7 +43,7 @@ h2 a:hover {
     background-color: #245dc7;
 }
 form{
-    height: 550px;
+    height: 630px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -168,6 +168,9 @@ input[type='submit']{
         <label>Subject</label>
         <input type="text" name="Subject">
 
+        <label>Subject Type</label>
+        {{ form.Type }}
+
         <input type="submit" value="Add">
 
         <div class="links">
@@ -187,7 +190,7 @@ input[type='submit']{
                 {% for subject in subjects %}
                     <tr>
                         <td>{{ subject.Staff.Name }}</td>
-                        <td>{{ subject.Subject }}</td>
+                        <td>{{ subject.Subject }} ({{ subject.Type }})</td>
                     </tr>
                 {% endfor %}
             </tbody>

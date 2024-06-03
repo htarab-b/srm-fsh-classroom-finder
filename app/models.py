@@ -76,6 +76,10 @@ orders = [
     [4, 4],
     [5, 5],
 ]
+subject_types = [
+    ["Major", "Major"],
+    ["Elective", "Elective"],
+]
 status = [
     ['PRESENT', 'PRESENT'],
     ['ABSENT', 'ABSENT']
@@ -114,7 +118,10 @@ class Subject(models.Model):
     Subject = models.CharField(max_length=55)
     # Subject Code
     Staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    Type = models.CharField(max_length=8, choices=subject_types)
     def __str__(self):
+        if self.Type == "Elective":
+            return f"{self.Class} - {self.Subject} (Elective)"
         return f"{self.Class} - {self.Subject}"
 
 class Period(models.Model):
