@@ -109,6 +109,7 @@ class Class(models.Model):
 class Staff(models.Model):
     Name = models.CharField(max_length=55)
     Email = models.EmailField()
+    EmpID = models.CharField(max_length=10)
     # Phone Number
     def __str__(self):
         return f"{self.Name} ({self.Email})"
