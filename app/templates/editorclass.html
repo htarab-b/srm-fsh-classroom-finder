@@ -20,7 +20,7 @@ body{
     background-color: #1b1b1b;
 }
 form{
-    height: 700px;
+    height: 650px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -34,7 +34,7 @@ form{
 }
 .dayorder {
     position: absolute;
-    top: 25%;
+    top: 35%;
     right: 20%;
 }
 .dayorder h1 {
@@ -79,6 +79,7 @@ label{
     margin-top: 25px;
     font-size: 16px;
     font-weight: 500;
+    color: #fff;
 }
 input, select{
     display: block;
@@ -106,32 +107,10 @@ input[type='submit']{
     cursor: pointer;
 }
 
-.links {
-    width: 100%;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    margin-top: 30px;
-}
-.links a {
-    text-decoration: none;
-    padding: 15px 25px;
-    margin: 5px;
-    background-color: #fff;
-    color: #000;
-    border-radius: 5px;
-    transition: 0.5s ease;
-    min-width: 48%;
-    font-size: 0.9rem;
-}
-.links a:hover {
-    background-color: #00FFFF;
-}
-
     </style>
 </head>
 <body>
+    {% include "navbar.html" %}
     <form method='get'>
         <h3>Select Class</h3>
 
@@ -150,11 +129,6 @@ input[type='submit']{
         <input type="hidden" name="Order" value="1">
 
         <input type="submit" value="Select">
-        
-        <div class="links">
-            <a href="{% url 'staffeditor' %}" class="card">Staff Editor</a>
-            <a href="{% url 'subjecteditor' %}" class="card">Subject Editor</a>
-        </div>
     </form>
     <div class="dayorder">
         <form action="{% url 'changedayorder' %}" method="post">

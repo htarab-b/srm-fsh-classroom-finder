@@ -152,6 +152,7 @@ input[type='submit']{
     {% endif %}
 </head>
 <body>
+    {% include "navbar.html" %}
     <h2><a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=1" class="card">Class Editor</a></h2>
     <form method="post">
         {% csrf_token %}
