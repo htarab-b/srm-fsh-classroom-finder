@@ -146,6 +146,10 @@ input[type='submit']{
     background-color: #00FFFF;
 }
 
+td a {
+    color: red;
+}
+
     </style>
     {% if message %}
         <script>alert('{{ message }}')</script>
@@ -185,6 +189,7 @@ input[type='submit']{
                 <tr>
                     <th>Staff</th>
                     <th>Subject</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -192,6 +197,7 @@ input[type='submit']{
                     <tr>
                         <td>{{ subject.Staff.Name }}</td>
                         <td>{{ subject.Subject }} ({{ subject.Type }})</td>
+                        <td><a href="{% url 'subjectdelete' %}?Programme={{ subject.Class.Programme }}&Course={{ subject.Class.Course }}&Year={{ subject.Class.Year }}&Section={{ subject.Class.Section }}&Staff={{ subject.Staff.Email }}&Subject={{ subject.Subject }}" class="card">Delete</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -293,6 +293,20 @@ class Period_Delete(LoginRequiredMixin, RedirectView):
         url = f"{reverse('editor')}?Programme={Programme}&Course={Course}&Year={Year}&Section={Section}&Order={order}"
         return redirect(url)
     
+class Subject_Delete(LoginRequiredMixin, RedirectView):
+    def get(self, request):
+        Programme = request.GET.get('Programme')
+        Course = request.GET.get('Course')
+        Year = request.GET.get('Year')
+        Section = str(request.GET.get('Section')).upper()
+        Class_Obj = Class.objects.get(Programme=Programme, Course=Course, Year=Year, Section=Section)
+        staffmail = request.GET.get('Staff')
+        subject = request.GET.get('Subject')
+        Subj_Obj = Subject.objects.get(Class=Class_Obj, Staff=Staff.objects.get(Email=staffmail), Subject=subject)
+        Subj_Obj.delete()
+        url = f"{reverse('subjecteditor')}?Programme={Programme}&Course={Course}&Year={Year}&Section={Section}&Slot={Class_Obj.Slot}"
+        return redirect(url)
+    
 class Change_DayOrder(LoginRequiredMixin, RedirectView):
     def post(self, request):
         do_obj = DayOrder.objects.filter(id=1)
