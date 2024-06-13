@@ -18,8 +18,6 @@
         overflow: hidden;
     }
     h1 {
-        position: absolute;
-        top: 2%;
         color: #000;
         font-size: 3rem;
         width: 100%;
@@ -34,7 +32,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        flex-wrap: wrap;
     }
 
     .table {
@@ -96,8 +94,8 @@
 </head>
 <body>
     {% include "header.html" %}
-    <h1>{{ class }}</h1>
     <div class="container">
+        <h1>{{ class }}</h1>
         <div class="table">
             <h2>Slot: {{ slot }}</h2>
             <div class="table-header">

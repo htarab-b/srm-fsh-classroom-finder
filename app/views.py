@@ -80,10 +80,10 @@ class StudentView(ListView):
 
 class StaffView(ListView):
     def get(self, request):
-        if (request.GET.get('Email') is None):
+        if (request.GET.get('EmpID') is None):
             return render(request, 'staff.html')
-        Email = request.GET.get('Email')
-        staff = Staff.objects.get(Email=Email)
+        EmpID = request.GET.get('EmpID')
+        staff = Staff.objects.get(EmpID=EmpID)
         
         orderobject = DayOrder.objects.get(id=1)
         db_date = orderobject.Date

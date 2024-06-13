@@ -42,35 +42,36 @@
             right: 0 !important;
         }
 
-        img {
-            width: 100px;
-            height: 100px;
-        }
-        .logo {
+        .header {
             position: absolute;
-            top: 50%;
-            left: 2%;
-            transform: translate(-0%, -50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            bottom: 10px;
+            left: 50%;
+            transform: translate(-50%, -0%);
             color: #fff;
             font-family: Arial, sans-serif;
+            width: 100%;
+            text-align: center;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            top: 70px;
+            left: 30px;
         }
     </style>
 </head>
 <body>
     <div class="navbar">
         <a href="{% url 'editor' %}" {% if current_page == "editor" %}class="active"{% endif %}>Class Editor</a>
-        <a href="{% url 'staffeditor' %}" {% if current_page == "staffeditor" %}class="active"{% endif %}>Staff Editor</a>
+        <a href="{% url 'staffeditor' %}" {% if current_page == "staffeditor" %}class="active"{% endif %}>Add new Staff</a>
         <a href="{% url 'subjecteditor' %}" {% if current_page == "subjecteditor" %}class="active"{% endif %}>Subject Editor</a>
     </div>
-    <div class="logo">
-        <h3>Developed and maintained by</h3>
-        <img src="{% static 'assets/Inferno_Logo.png' %}" alt="Club Inferno">
+    <div class="header">
+        <h4>Developed and maintained by Club Inferno, Department of Computer Science</h4>
     </div>
+    <img src="{% static 'assets/Inferno_Logo.png' %}" alt="Club Inferno">
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var currentPath = window.location.pathname;

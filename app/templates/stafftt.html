@@ -14,10 +14,9 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        gap: 10px;
     }
     h1 {
-        position: absolute;
-        top: 2%;
         color: #000;
         font-size: 3rem;
         width: 100%;
@@ -32,8 +31,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: auto;
-        margin-top: 10%;
     }
     .container2 {
         width: 100vw;
@@ -43,7 +40,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: auto;
     }
 
     .container1 h2, .container2 h2 {
@@ -106,7 +102,7 @@
 </head>
 <body>
     {% include "header.html" %}
-    <h1>{{ staff }}</h1>
+    <h1>{{ staff.Name }}</h1>
 
     <div class="container1">
         <div class="table">
