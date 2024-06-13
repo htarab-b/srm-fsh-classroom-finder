@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +41,24 @@
             top: 50 !important;
             right: 0 !important;
         }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        .logo {
+            position: absolute;
+            top: 50%;
+            left: 2%;
+            transform: translate(-0%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -47,6 +66,10 @@
         <a href="{% url 'editor' %}" {% if current_page == "editor" %}class="active"{% endif %}>Class Editor</a>
         <a href="{% url 'staffeditor' %}" {% if current_page == "staffeditor" %}class="active"{% endif %}>Staff Editor</a>
         <a href="{% url 'subjecteditor' %}" {% if current_page == "subjecteditor" %}class="active"{% endif %}>Subject Editor</a>
+    </div>
+    <div class="logo">
+        <h3>Developed and maintained by</h3>
+        <img src="{% static 'assets/Inferno_Logo.png' %}" alt="Club Inferno">
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

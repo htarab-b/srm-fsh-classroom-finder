@@ -243,7 +243,8 @@ class StaffEditorView(LoginRequiredMixin, ListView):
     def post(self, request):
         Name = request.POST.get('Name')
         Email = request.POST.get('Email')
-        Staff.objects.create(Name=Name, Email=Email)
+        EmpID = request.POST.get('EmpID')
+        Staff.objects.create(Name=Name, Email=Email, EmpID=EmpID)
         return render(request, 'staffeditor.html', {'message': 'Staff added successfully'})
     
 class SubjectEditorView(LoginRequiredMixin, ListView):
