@@ -12,4 +12,5 @@ urlpatterns = [
     path('perioddeletionhandler', Period_Delete.as_view(), name='perioddelete'),
     path('subjectdeletionhandler', Subject_Delete.as_view(), name='subjectdelete'),
     path('dayorderchangehandler', Change_DayOrder.as_view(), name='changedayorder'),
+    path('downloadclassttcsv', download_schedule_csv, name='downloadclassttcsv'),
 ]

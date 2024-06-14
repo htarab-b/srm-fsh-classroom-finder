@@ -1,6 +1,4 @@
-from typing import Any
-from django import http
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, RedirectView
@@ -9,6 +7,7 @@ from .models import *
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
+import csv
 
 # Authentication:
 class LoginView(ListView):
@@ -316,3 +315,46 @@ class Change_DayOrder(LoginRequiredMixin, RedirectView):
             Order = request.POST.get('Order')
         )
         return redirect('editor')
+    
+import csv
+from django.http import HttpResponse
+
+def download_schedule_csv(request):
+    Programme = request.GET.get('Programme')
+    Course = request.GET.get('Course')
+    Year = request.GET.get('Year')
+    Section = str(request.GET.get('Section')).upper()
+    classroom = Class.objects.get(Programme=Programme, Course=Course, Year=Year, Section=Section)
+
+    slot = classroom.Slot
+    periods = [Period.objects.filter(Class=classroom, Order=i, Slot=slot) for i in range(1, 6)]
+
+    if slot == 'A':
+        head = ['DAY ORDER', '08:15 AM - 09:30 AM', '09:30 AM - 09:35 AM', '09:35 AM - 10:50 AM', '10:50 AM - 11:00 AM', '11:00 AM - 12:15 PM', '12:15 PM - 12:20 PM', '12:20 PM - 01:35 PM']
+    else:
+        head = ['DAY ORDER', '12:20 PM - 01:35 PM', '01:35 PM - 01:40 PM', '01:40 PM - 02:55 PM', '02:55 PM - 03:05 PM', '03:05 PM - 04:20 PM', '04:20 PM - 04:25 PM', '04:25 PM - 05:40 PM']
+
+    def get_period_info(period_set, period_number):
+        period = period_set.filter(Period=period_number).first()
+        if period:
+            return f"{period.Subject.Subject} - {period.Staff.Name} - {period.ClassRoom}"
+        else:
+            return ''
+
+    schedule_data = [
+        head,
+        ['1', get_period_info(periods[0], 1), 'Break', get_period_info(periods[0], 3), 'Break', get_period_info(periods[0], 5), 'Break', get_period_info(periods[0], 7)],
+        ['2', get_period_info(periods[1], 1), 'Break', get_period_info(periods[1], 3), 'Break', get_period_info(periods[1], 5), 'Break', get_period_info(periods[1], 7)],
+        ['3', get_period_info(periods[2], 1), 'Break', get_period_info(periods[2], 3), 'Break', get_period_info(periods[2], 5), 'Break', get_period_info(periods[2], 7)],
+        ['4', get_period_info(periods[3], 1), 'Break', get_period_info(periods[3], 3), 'Break', get_period_info(periods[3], 5), 'Break', get_period_info(periods[3], 7)],
+        ['5', get_period_info(periods[4], 1), 'Break', get_period_info(periods[4], 3), 'Break', get_period_info(periods[4], 5), 'Break', get_period_info(periods[4], 7)],
+    ]
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{Year} {Programme} {Course} {Section} TimeTable.csv"'
+
+    writer = csv.writer(response)
+    for row in schedule_data:
+        writer.writerow(row)
+
+    return response

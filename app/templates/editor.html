@@ -157,6 +157,7 @@
         <a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=3" {% if Order == '3' %}class='current'{% endif %}>Day Order 3</a>
         <a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=4" {% if Order == '4' %}class='current'{% endif %}>Day Order 4</a>
         <a href="{% url 'editor' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}&Order=5" {% if Order == '5' %}class='current'{% endif %}>Day Order 5</a>
+        <a href="{% url 'downloadclassttcsv' %}?Programme={{ class.Programme }}&Course={{ class.Course }}&Year={{ class.Year }}&Section={{ class.Section }}">Download Full Timetable</a>
     </div>
     <h1>Slot: {{ slot }}</h1>
     <h2><a href="{% url 'editor' %}">Back</a>
