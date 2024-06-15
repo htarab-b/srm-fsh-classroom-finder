@@ -52,10 +52,18 @@
             width: 100%;
             text-align: center;
         }
+        .header h4 {
+            font-weight: 100;
+        }
 
-        img {
-            width: 150px;
-            height: 150px;
+        .infernologo {
+            width: 90px;
+            position: absolute;
+            top: 70px;
+            right: 30px;
+        }
+        .srmlogo {
+            width: 250px;
             position: absolute;
             top: 70px;
             left: 30px;
@@ -71,7 +79,10 @@
     <div class="header">
         <h4>Developed and maintained by Club Inferno, Department of Computer Science</h4>
     </div>
-    <img src="{% static 'assets/Inferno_Logo.png' %}" alt="Club Inferno">
+    <div class="logo">
+        <img src="{% static 'assets/SRM_Logo.png' %}" alt="SRMIST" class="srmlogo">
+        <img src="{% static 'assets/Inferno_Logo.png' %}" alt="Club Inferno" class="infernologo">
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var currentPath = window.location.pathname;

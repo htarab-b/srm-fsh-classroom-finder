@@ -14,37 +14,34 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 10px;
     }
     h1 {
         color: #000;
         font-size: 3rem;
-        width: 100%;
-        left: 0;
         text-align: center;
+        height: max-content;
+        margin: 0;
+        margin-bottom: 20px;
     }
 
     .container1 {
         width: 100vw;
-        margin-right: auto;
-        margin-left: 0;
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 100px;
     }
     .container2 {
         width: 100vw;
-        margin-right: auto;
-        margin-left: 0;
-        margin-top: 30px;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: top;
+        margin-top: 50px;
     }
 
     .container1 h2, .container2 h2 {
         text-align: center;
-        margin-left: 0;
+        margin-top: 0;
     }
 
     .table {
@@ -102,10 +99,10 @@
 </head>
 <body>
     {% include "header.html" %}
-    <h1>{{ staff.Name }}</h1>
 
     <div class="container1">
         <div class="table">
+            <h1>{{ staff.Name }}</h1>
             <h2>Slot A</h2>
             <div class="table-header">
                 <div class="header__item">Day Order</div>
