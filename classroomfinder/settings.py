@@ -19,12 +19,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nm*1n(k$6i-$h39(^(iar&p5wlm0n+t_-9%@f^a&do*3!*&gq+'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = ['*']
 
 
@@ -138,3 +132,27 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # User model
 AUTH_USER_MODEL = 'app.StaffUser'
+
+# --------------------------
+# Deployment Server Settings
+# --------------------------
+
+SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True  # Preload HSTS in browsers
+
+SECURE_SSL_REDIRECT = True
+
+# SECURITY WARNING: keep the secret key used in production secret!
+
+#SECRET_KEY = 'django-insecure-nm*1n(k$6i-$h39(^(iar&p5wlm0n+t_-9%@f^a&do*3!*&gq+'
+SECRET_KEY = '19qj6m201n#a0pm_)k%(!ka!zu9$#480&@fm0wt&3jmen6ig6o'
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+
+# SECURITY WARNING: don't run with debug turned on in production!
+
+#DEBUG = True
+DEBUG = False
