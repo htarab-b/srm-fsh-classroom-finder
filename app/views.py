@@ -267,6 +267,8 @@ class SubjectEditorView(LoginRequiredMixin, ListView):
         classroom = Class.objects.get(Programme=Programme, Course=Course, Year=Year, Section=Section, Slot=Slot)
         staffmail = request.POST.get('Staff')
         subject = request.POST.get('Subject')
+        if Subject.objects.filter(Class=classroom, Subject=subject).exists():
+            subject += '_'
         subjtype = request.POST.get('Type')
         Subject.objects.create(Class=classroom, Staff=Staff.objects.get(Email=staffmail), Subject=subject, Type=subjtype)
         subjects = Subject.objects.filter(Class=classroom)

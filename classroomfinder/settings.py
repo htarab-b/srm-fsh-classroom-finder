@@ -143,16 +143,15 @@ SECURE_HSTS_PRELOAD = True  # Preload HSTS in browsers
 
 SECURE_SSL_REDIRECT = True
 
-# SECURITY WARNING: keep the secret key used in production secret!
-
-#SECRET_KEY = 'django-insecure-nm*1n(k$6i-$h39(^(iar&p5wlm0n+t_-9%@f^a&do*3!*&gq+'
-SECRET_KEY = '19qj6m201n#a0pm_)k%(!ka!zu9$#480&@fm0wt&3jmen6ig6o'
-
 SESSION_COOKIE_SECURE = True
-
 CSRF_COOKIE_SECURE = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# # SECURITY WARNING: keep the secret key used in production secret!
 
-#DEBUG = True
+# SECRET_KEY = 'django-insecure-nm*1n(k$6i-$h39(^(iar&p5wlm0n+t_-9%@f^a&do*3!*&gq+'
+SECRET_KEY = '19qj6m201n#a0pm_)k%(!ka!zu9$#480&@fm0wt&3jmen6ig6o'
+
+# # SECURITY WARNING: don't run with debug turned on in production!
+
+# DEBUG = True
 DEBUG = False
