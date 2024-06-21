@@ -1,16 +1,26 @@
 {
   "version": 2,
   "builds": [
-    { "src": "classroomfinder/wsgi.py", "use": "@vercel/python" },
-    { "src": "staticfiles/**/*", "use": "@vercel/static" }
+    {
+      "src": "classroomfinder/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "regions": ["sin1"]
+      }
+    },
+    {
+      "src": "staticfiles/**/*",
+      "use": "@vercel/static"
+    }
   ],
   "routes": [
-    { "src": "/static/(.*)", "dest": "/staticfiles/$1" },
-    { "src": "/(.*)", "dest": "classroomfinder/wsgi.py" }
-  ],
-  "functions": {
-    "classroomfinder/wsgi.py": {
-      "regions": ["sin1"]
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "classroomfinder/wsgi.py"
     }
-  }
+  ]
 }
