@@ -7,5 +7,10 @@
   "routes": [
     { "src": "/static/(.*)", "dest": "/staticfiles/$1" },
     { "src": "/(.*)", "dest": "classroomfinder/wsgi.py" }
-  ]
+  ],
+  "functions": {
+    "classroomfinder/wsgi.py": {
+      "regions": ["sin1"]
+    }
+  }
 }
