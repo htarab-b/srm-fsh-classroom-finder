@@ -91,9 +91,7 @@ slots = [
 
 # Staff Model
 class StaffUser(AbstractUser):
-    Department = models.CharField(max_length=75)
     Status = models.CharField(max_length=7, choices=status)
-
 
 # Models
 
@@ -110,6 +108,7 @@ class Staff(models.Model):
     Name = models.CharField(max_length=55)
     Email = models.EmailField()
     EmpID = models.CharField(max_length=10)
+    Department = models.CharField(max_length=75)
     # Phone Number
     def __str__(self):
         return f"{self.Name} ({self.Email})"
