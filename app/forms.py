@@ -25,3 +25,11 @@ class SubjectEditorForm(forms.ModelForm):
     class Meta:
         model = Subject
         fields = '__all__'
+
+class StaffEditorForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(StaffEditorForm, self).__init__(*args, **kwargs)
+        self.fields['Department'].widget = forms.Select(choices = Staff.objects.values_list('Department', 'Department').distinct())
+    class Meta:
+        model = Staff
+        fields = '__all__'
