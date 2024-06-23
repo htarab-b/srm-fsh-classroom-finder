@@ -140,21 +140,21 @@ AUTH_USER_MODEL = 'app.StaffUser'
 # Deployment Server Settings
 # --------------------------
 
-# SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
-# SECURE_HSTS_PRELOAD = True  # Preload HSTS in browsers
+SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True  # Preload HSTS in browsers
 
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = 'django-insecure-nm*1n(k$6i-$h39(^(iar&p5wlm0n+t_-9%@f^a&do*3!*&gq+'
-# SECRET_KEY = '19qj6m201n#a0pm_)k%(!ka!zu9$#480&@fm0wt&3jmen6ig6o'
+# SECRET_KEY = 'django-insecure-nm*1n(k$6i-$h39(^(iar&p5wlm0n+t_-9%@f^a&do*3!*&gq+'
+SECRET_KEY = '19qj6m201n#a0pm_)k%(!ka!zu9$#480&@fm0wt&3jmen6ig6o'
 
 # # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
