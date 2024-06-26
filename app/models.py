@@ -127,6 +127,8 @@ class Subject(models.Model):
 class Classroom(models.Model):
     RoomNo = models.CharField(max_length=15)
     Capacity = models.IntegerField()
+    def __str__(self) -> str:
+        return self.RoomNo
 
 class Period(models.Model):
     Class = models.ForeignKey(Class, on_delete=models.CASCADE)

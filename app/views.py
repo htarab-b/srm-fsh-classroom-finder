@@ -112,7 +112,7 @@ class ClassRoomView(ListView):
     def get(self, request):
         if (request.GET.get('Classroom') is None):
             return render(request, 'classroom.html')
-        Classroom = request.GET.get('Classroom')
+        Room = Classroom.objects.get(RoomNo=request.GET.get('Classroom'))
         
         orderobject = DayOrder.objects.get(id=1)
         db_date = orderobject.Date
@@ -126,17 +126,17 @@ class ClassRoomView(ListView):
             if week_day_no > 6: week_day_no = 0
             if order == 6: order = 1
 
-        do1A = Period.objects.filter(ClassRoom=Classroom, Order=1, Slot='A')
-        do2A = Period.objects.filter(ClassRoom=Classroom, Order=2, Slot='A')
-        do3A = Period.objects.filter(ClassRoom=Classroom, Order=3, Slot='A')
-        do4A = Period.objects.filter(ClassRoom=Classroom, Order=4, Slot='A')
-        do5A = Period.objects.filter(ClassRoom=Classroom, Order=5, Slot='A')
-        do1B = Period.objects.filter(ClassRoom=Classroom, Order=1, Slot='B')
-        do2B = Period.objects.filter(ClassRoom=Classroom, Order=2, Slot='B')
-        do3B = Period.objects.filter(ClassRoom=Classroom, Order=3, Slot='B')
-        do4B = Period.objects.filter(ClassRoom=Classroom, Order=4, Slot='B')
-        do5B = Period.objects.filter(ClassRoom=Classroom, Order=5, Slot='B')
-        return render(request, 'classroomtt.html', {'do1A': do1A, 'do2A': do2A, 'do3A': do3A, 'do4A': do4A, 'do5A': do5A, 'do1B': do1B, 'do2B': do2B, 'do3B': do3B, 'do4B': do4B, 'do5B': do5B, 'order': order, 'classroom': Classroom})
+        do1A = Period.objects.filter(ClassRoom=Room, Order=1, Slot='A')
+        do2A = Period.objects.filter(ClassRoom=Room, Order=2, Slot='A')
+        do3A = Period.objects.filter(ClassRoom=Room, Order=3, Slot='A')
+        do4A = Period.objects.filter(ClassRoom=Room, Order=4, Slot='A')
+        do5A = Period.objects.filter(ClassRoom=Room, Order=5, Slot='A')
+        do1B = Period.objects.filter(ClassRoom=Room, Order=1, Slot='B')
+        do2B = Period.objects.filter(ClassRoom=Room, Order=2, Slot='B')
+        do3B = Period.objects.filter(ClassRoom=Room, Order=3, Slot='B')
+        do4B = Period.objects.filter(ClassRoom=Room, Order=4, Slot='B')
+        do5B = Period.objects.filter(ClassRoom=Room, Order=5, Slot='B')
+        return render(request, 'classroomtt.html', {'do1A': do1A, 'do2A': do2A, 'do3A': do3A, 'do4A': do4A, 'do5A': do5A, 'do1B': do1B, 'do2B': do2B, 'do3B': do3B, 'do4B': do4B, 'do5B': do5B, 'order': order, 'classroom': Room})
 
 class EditorView(LoginRequiredMixin , ListView):
     login_url = 'login'
@@ -181,7 +181,7 @@ class EditorView(LoginRequiredMixin , ListView):
         Class_Obj = Class.objects.get(Programme=Programme, Course=Course, Year=Year, Section=Section)
         order = request.GET.get('Order')
         period = request.POST.get('Period')
-        classroom = request.POST.get("ClassNo")
+        classroom = Classroom.objects.get(request.POST.get("ClassNo"))
         subject = request.POST.get("Subject")
         flag_modify = request.POST.get('modify')
         Sub_Obj = Subject.objects.get(Subject=subject, Class=Class_Obj)
