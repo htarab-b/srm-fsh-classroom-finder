@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Classroom Finder - Staff Editor</title>
+    <title>{{ staff.Name }} Details</title>
  
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -88,16 +88,14 @@ input[type='submit']{
 <body>
     {% include "navbar.html" %}
     <form method="get">
-        <h3>Staff Editor</h3>
+        {% csrf_token %}
+        <h3>{{ staff.Name }}</h3>
 
-        <label>Employee ID</label>
-        <input type="text" name="EmpID">
+        <label>Department</label>
+        <input type="text" value="{{ staff.Department }}" disabled>
 
-        <input type="submit" value="Submit">
-
-        <div class="links">
-            <a href="{% url 'addstaff' %}" class="">Add New Staff</a>
-        </div>
+        <label>Email</label>
+        <input type="text" value="{{ staff.Email }}" disabled>
         
     </form>
 </body>

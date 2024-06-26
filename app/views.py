@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from typing import Any
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, RedirectView
@@ -237,15 +238,27 @@ class EditorView(LoginRequiredMixin , ListView):
         return redirect(url)
     
 class StaffEditorView(LoginRequiredMixin, ListView):
+    login_url = 'login'
     def get(self, request):
-        return render(request, 'staffeditor.html', {'form': StaffEditorForm})
+        if (request.GET.get('EmpID') is None):
+            return render(request, 'staffeditor.html')
+        return render(request, 'staffdetails.html', {'staff': Staff.objects.get(EmpID=request.GET.get('EmpID'))})
+    def post(self, request):
+        EmpID = request.POST.get('EmpID')
+        Staff.objects.get(EmpID=EmpID)
+        return render(request, 'staffeditor.html', {'message': 'Staff added successfully'})
+    
+class StaffAddView(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    def get(self, request):
+        return render(request, 'addstaff.html', {'form': StaffEditorForm})
     def post(self, request):
         Name = request.POST.get('Name')
         Department = request.POST.get('Department')
         Email = request.POST.get('Email')
         EmpID = request.POST.get('EmpID')
         Staff.objects.create(Name=Name, Email=Email, EmpID=EmpID, Department=Department)
-        return render(request, 'staffeditor.html', {'message': 'Staff added successfully'})
+        return render(request, 'addstaff.html', {'message': 'Staff added successfully'})
     
 class SubjectEditorView(LoginRequiredMixin, ListView):
     def get(self, request):

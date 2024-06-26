@@ -18,7 +18,7 @@ body{
     background-color: #1b1b1b;
 }
 form{
-    height: 400px;
+    height: 660px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -87,18 +87,24 @@ input[type='submit']{
 </head>
 <body>
     {% include "navbar.html" %}
-    <form method="get">
-        <h3>Staff Editor</h3>
+    <form method="post">
+        {% csrf_token %}
+        <h3>Add new Staff</h3>
+
+        <label>Staff Name</label>
+        <input type="text" name="Name">
+
+        <label>Department</label>
+        {{ form.Department }}
 
         <label>Employee ID</label>
         <input type="text" name="EmpID">
 
-        <input type="submit" value="Submit">
+        <label>Staff College Mail ID</label>
+        <input type="email" name="Email">
 
-        <div class="links">
-            <a href="{% url 'addstaff' %}" class="">Add New Staff</a>
-        </div>
-        
+        <input type="submit" value="Add">
+
     </form>
 </body>
 </html>
