@@ -123,15 +123,19 @@ class Subject(models.Model):
         if self.Type == "Elective":
             return f"{self.Class} - {self.Subject} (Elective)"
         return f"{self.Class} - {self.Subject}"
+    
+class Classroom(models.Model):
+    RoomNo = models.CharField(max_length=15)
+    Capacity = models.IntegerField()
 
 class Period(models.Model):
     Class = models.ForeignKey(Class, on_delete=models.CASCADE)
     Order = models.IntegerField(choices=orders)
-    Subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)
-    Staff = models.ForeignKey(Staff, on_delete=models.CASCADE, null=True, blank=True)
+    Subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    Staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     Slot = models.CharField(max_length=1, choices=slots)
     Period = models.IntegerField()
-    ClassRoom = models.CharField(max_length=35, null=True, blank=True)
+    ClassRoom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
     def __str__(self):
         return f"Slot {self.Slot} Day Order {self.Order}: {self.Subject}"
 
