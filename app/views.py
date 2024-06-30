@@ -1,4 +1,5 @@
 from typing import Any
+from django import http
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -166,7 +167,7 @@ class EditorView(LoginRequiredMixin , ListView):
 
         slot = classname.Slot
 
-        periodlist = Period.objects.filter(Order=order, Slot=slot).values_list('Period', 'ClassRoom').distinct()
+        periodlist = Period.objects.filter(Order=order, Slot=slot).values_list('Period', 'ClassRoom__RoomNo').distinct()
 
         classtt = Period.objects.filter(Class=classname, Order=order, Slot=slot)
         staffs = Staff.objects.filter(subject__Class=classname).distinct()
@@ -182,7 +183,7 @@ class EditorView(LoginRequiredMixin , ListView):
         Class_Obj = Class.objects.get(Programme=Programme, Course=Course, Year=Year, Section=Section)
         order = request.GET.get('Order')
         period = request.POST.get('Period')
-        classroom = Classroom.objects.get(request.POST.get("ClassNo"))
+        classroom = Classroom.objects.get(RoomNo=request.POST.get("ClassNo"))
         subject = request.POST.get("Subject")
         flag_modify = request.POST.get('modify')
         Sub_Obj = Subject.objects.get(Subject=subject, Class=Class_Obj)
@@ -241,8 +242,12 @@ class StaffEditorView(LoginRequiredMixin, ListView):
     login_url = 'login'
     def get(self, request):
         if (request.GET.get('EmpID') is None):
+            Absentee.objects.all().exclude(Date=date.today()).delete()
             return render(request, 'staffeditor.html')
-        return render(request, 'staffdetails.html', {'staff': Staff.objects.get(EmpID=request.GET.get('EmpID'))})
+        absent_status = Absentee.objects.filter(Date=date.today(), StaffP=Staff.objects.get(EmpID=request.GET.get('EmpID'))).exists()
+        if absent_status: absent_status = "Absent"
+        else: absent_status = "Present"
+        return render(request, 'staffdetails.html', {'staff': Staff.objects.get(EmpID=request.GET.get('EmpID')), 'absent': absent_status})
     def post(self, request):
         EmpID = request.POST.get('EmpID')
         Staff.objects.get(EmpID=EmpID)
@@ -321,6 +326,34 @@ class Subject_Delete(LoginRequiredMixin, RedirectView):
         Subj_Obj = Subject.objects.get(Class=Class_Obj, Staff=Staff.objects.get(Email=staffmail), Subject=subject)
         Subj_Obj.delete()
         url = f"{reverse('subjecteditor')}?Programme={Programme}&Course={Course}&Year={Year}&Section={Section}&Slot={Class_Obj.Slot}"
+        return redirect(url)
+    
+class Staff_Absent(LoginRequiredMixin, RedirectView):
+    def get(self, request):
+        EmpID = request.GET.get('EmpID')
+        staff = Staff.objects.get(EmpID=EmpID)
+        
+        orderobject = DayOrder.objects.get(id=1)
+        db_date = orderobject.Date
+        order = orderobject.Order
+        day_diff = (date.today() - db_date).days
+        week_day_no = (db_date).weekday()
+        for i in range(day_diff):
+            if week_day_no < 5:
+                order += 1
+            week_day_no += 1
+            if week_day_no > 6: week_day_no = 0
+            if order == 6: order = 1
+
+        staffperiods = Period.objects.filter(Order=order, Staff=staff)
+
+        for period in staffperiods:
+            periods = Period.objects.filter(Slot=period.Slot, Period=period.Period)
+            assigned_staff = Staff.objects.filter(period__in=periods)
+            unassigned_staff = Staff.objects.all().exclude(id__in=assigned_staff.values_list('id', flat=True))
+            Absentee.objects.create(StaffP=staff, Date=date.today(), SubPeriod=period, Substitute=unassigned_staff.first())
+
+        url = f"{reverse('staffeditor')}?EmpID={Staff.objects.get(EmpID=EmpID).EmpID}"
         return redirect(url)
     
 class Change_DayOrder(LoginRequiredMixin, RedirectView):

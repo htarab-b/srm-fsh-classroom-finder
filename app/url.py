@@ -9,6 +9,7 @@ urlpatterns = [
     path('editor', EditorView.as_view(), name='editor'),
     path('staffeditor', StaffEditorView.as_view(), name='staffeditor'),
     path('addstaff', StaffAddView.as_view(), name='addstaff'),
+    path('staffmarkabsent', Staff_Absent.as_view(), name='staffmarkabsent'),
     path('subjecteditor', SubjectEditorView.as_view(), name='subjecteditor'),
     path('perioddeletionhandler', Period_Delete.as_view(), name='perioddelete'),
     path('subjectdeletionhandler', Subject_Delete.as_view(), name='subjectdelete'),

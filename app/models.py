@@ -111,7 +111,7 @@ class Staff(models.Model):
     Department = models.CharField(max_length=75)
     # Phone Number
     def __str__(self):
-        return f"{self.Name} ({self.Email})"
+        return f"{self.Name} ({self.Department})"
 
 class Subject(models.Model):
     Class = models.ForeignKey(Class, on_delete=models.CASCADE)
@@ -141,6 +141,13 @@ class Period(models.Model):
     def __str__(self):
         return f"Slot {self.Slot} Day Order {self.Order}: {self.Subject}"
 
+class Absentee(models.Model):
+    StaffP = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name='staffp_absentees')
+    Date = models.DateField()
+    SubPeriod = models.ForeignKey(Period, on_delete=models.CASCADE, null=True, blank=True)
+    Substitute = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name='substitute_absentees', null=True, blank=True)
+    def __str__(self):
+        return f"{self.StaffP.Name} ({self.StaffP.Department})"
 
 # Day Order Model 
 class DayOrder(models.Model):
