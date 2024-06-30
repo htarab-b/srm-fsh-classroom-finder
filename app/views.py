@@ -349,8 +349,8 @@ class Staff_Absent(LoginRequiredMixin, RedirectView):
 
         for period in staffperiods:
             periods = Period.objects.filter(Slot=period.Slot, Period=period.Period)
-            assigned_staff = Staff.objects.filter(period__in=periods)
-            unassigned_staff = Staff.objects.all().exclude(id__in=assigned_staff.values_list('id', flat=True))
+            assigned_staff = Staff.objects.filter(period__in=periods, Department=staff.Department)
+            unassigned_staff = Staff.objects.filter(Department=staff.Department).exclude(id__in=assigned_staff.values_list('id', flat=True))
             Absentee.objects.create(StaffP=staff, Date=date.today(), SubPeriod=period, Substitute=unassigned_staff.first())
 
         url = f"{reverse('staffeditor')}?EmpID={Staff.objects.get(EmpID=EmpID).EmpID}"
