@@ -52,7 +52,10 @@ class HomeView(ListView):
         do3 = Period.objects.filter(Class=classroom, Order=3, Slot=slot)
         do4 = Period.objects.filter(Class=classroom, Order=4, Slot=slot)
         do5 = Period.objects.filter(Class=classroom, Order=5, Slot=slot)
-        return render(request, 'timetable.html', {'do1': do1, 'do2': do2, 'do3': do3, 'do4': do4, 'do5': do5, 'class': classroom, 'order': order, 'slot': slot})
+
+        substitute_periods = Absentee.objects.filter(Date=date.today(), SubPeriod__in=Period.objects.filter(Class=classroom, Order=order))
+
+        return render(request, 'timetable.html', {'do1': do1, 'do2': do2, 'do3': do3, 'do4': do4, 'do5': do5, 'class': classroom, 'order': order, 'slot': slot, 'substitute_periods':substitute_periods})
     
 class StudentView(ListView):
     def get(self, request):
@@ -77,7 +80,9 @@ class StudentView(ListView):
             if order == 6: order = 1
 
         tt = Period.objects.filter(Class=classroom, Order=order)
-        return render(request, 'studenttimetable.html', {'tt': tt, 'class': classroom, 'dayorder': order})
+        substitute_periods = Absentee.objects.filter(Date=date.today(), SubPeriod__in=tt)
+
+        return render(request, 'studenttimetable.html', {'tt': tt, 'class': classroom, 'dayorder': order, 'substitute_periods':substitute_periods})
 
 class StaffView(ListView):
     def get(self, request):
@@ -108,7 +113,10 @@ class StaffView(ListView):
         do3B = Period.objects.filter(Staff=staff, Order=3, Slot='B')
         do4B = Period.objects.filter(Staff=staff, Order=4, Slot='B')
         do5B = Period.objects.filter(Staff=staff, Order=5, Slot='B')
-        return render(request, 'stafftt.html', {'do1A': do1A, 'do2A': do2A, 'do3A': do3A, 'do4A': do4A, 'do5A': do5A, 'do1B': do1B, 'do2B': do2B, 'do3B': do3B, 'do4B': do4B, 'do5B': do5B, 'staff': staff, 'order': order})
+
+        substitute_periods = Absentee.objects.filter(Date=date.today(), Substitute=staff)
+
+        return render(request, 'stafftt.html', {'do1A': do1A, 'do2A': do2A, 'do3A': do3A, 'do4A': do4A, 'do5A': do5A, 'do1B': do1B, 'do2B': do2B, 'do3B': do3B, 'do4B': do4B, 'do5B': do5B, 'staff': staff, 'order': order, 'substitute_periods':substitute_periods})
     
 class ClassRoomView(ListView):
     def get(self, request):
@@ -138,7 +146,10 @@ class ClassRoomView(ListView):
         do3B = Period.objects.filter(ClassRoom=Room, Order=3, Slot='B')
         do4B = Period.objects.filter(ClassRoom=Room, Order=4, Slot='B')
         do5B = Period.objects.filter(ClassRoom=Room, Order=5, Slot='B')
-        return render(request, 'classroomtt.html', {'do1A': do1A, 'do2A': do2A, 'do3A': do3A, 'do4A': do4A, 'do5A': do5A, 'do1B': do1B, 'do2B': do2B, 'do3B': do3B, 'do4B': do4B, 'do5B': do5B, 'order': order, 'classroom': Room})
+
+        substitute_periods = Absentee.objects.filter(Date=date.today(), SubPeriod__in=Period.objects.filter(ClassRoom=Room, Order=order))
+
+        return render(request, 'classroomtt.html', {'do1A': do1A, 'do2A': do2A, 'do3A': do3A, 'do4A': do4A, 'do5A': do5A, 'do1B': do1B, 'do2B': do2B, 'do3B': do3B, 'do4B': do4B, 'do5B': do5B, 'order': order, 'classroom': Room, 'substitute_periods':substitute_periods})
 
 class EditorView(LoginRequiredMixin , ListView):
     login_url = 'login'

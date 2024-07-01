@@ -34,6 +34,19 @@
         flex-wrap: wrap;
     }
 
+    .substitute-container {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: top;
+        margin-top: 50px;
+        flex-wrap: wrap;
+    }
+
+    .substitute-container h1 {
+        width: 100%;
+    }
+
     .table {
         width: 100%;
     }
@@ -157,6 +170,32 @@
                     <div class="table-data"><p>{% for period in do5 %}{% if period.Period == 5 %}<br><strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}<br>{% endif %}{% endfor %}</p></div>
                     <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
                     <div class="table-data"><p>{% for period in do5 %}{% if period.Period == 7 %}<br><strong class='highlight1'>{{ period.ClassRoom }}</strong><br><strong class='highlight2'>{{ period.Staff.Name }}</strong><br> {{ period.Subject.Subject }}<br>{% endif %}{% endfor %}</p></div>
+                </div>
+            </div>	
+        </div>
+    </div>
+
+    <div class="substitute-container">
+        <h1>Substitute Periods</h1>
+        <div class="table">
+            <div class="table-header">
+                <div class="header__item">{% if slot == 'A' %}08:15 AM <br>- 09:30 AM{% else %}12:20 PM <br>- 01:35 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}09:30 AM <br>- 09:35 AM{% else %}01:35 PM <br>- 01:40 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}09:35 AM <br>- 10:50 AM{% else %}01:40 PM <br>- 02:55 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}10:50 AM <br>- 11:00 AM{% else %}02:55 PM <br>- 03:05 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}11:00 AM <br>- 12:15 PM{% else %}03:05 PM <br>- 04:20 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}12:15 PM <br>- 12:20 PM{% else %}04:20 PM <br>- 04:25 PM{% endif %}</div>
+                <div class="header__item">{% if slot == 'A' %}12:20 PM <br>- 01:35 PM{% else %}04:25 PM <br>- 05:40 PM{% endif %}</div>
+            </div>
+            <div class="table-content">
+                <div class="table-row">		
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 1 and period.SubPeriod.Slot == slot %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 3 and period.SubPeriod.Slot == slot %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 5 and period.SubPeriod.Slot == slot %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 7 and period.SubPeriod.Slot == slot %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
                 </div>
             </div>	
         </div>

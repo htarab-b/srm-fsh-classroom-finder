@@ -17,8 +17,6 @@
         flex-wrap: wrap;
     }
     h1 {
-        position: absolute;
-        top: 2%;
         color: #000;
         font-size: 3rem;
         width: 100%;
@@ -34,7 +32,7 @@
         justify-content: center;
         align-items: center;
         height: auto;
-        margin-top: 10%;
+        margin-top: 100px;
     }
     .container2 {
         width: 100vw;
@@ -47,9 +45,22 @@
         height: auto;
     }
 
-    .container1 h2, .container2 h2 {
+    .container3 {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: top;
+        margin-top: 50px;
+        flex-wrap: wrap;
+    }
+
+    .container1 h2, .container2 h2, .container3 h2 {
         text-align: center;
-        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .container3 h1 {
+        width: 100%;
     }
 
     .table {
@@ -236,6 +247,56 @@
                     <div class="table-data"><p>{% for period in do5B %}{% if period.Period == 5 %}<br><strong class='highlight1'>{{ period.Staff.Name }}</strong><br><strong class='highlight2'>{{ period.Class }}</strong><br> {{ period.Subject.Subject }}<br>{% endif %}{% endfor %}</p></div>
                     <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
                     <div class="table-data"><p>{% for period in do5B %}{% if period.Period == 7 %}<strong class='highlight1'>{{ period.Staff.Name }}</strong><br><strong class='highlight2'>{{ period.Class }}</strong><br> {{ period.Subject.Subject }}{% endif %}{% endfor %}</p></div>
+                </div>
+            </div>	
+        </div>
+    </div>
+
+    <div class="container3">
+        <h1>Substitute Periods</h1>
+        <div class="table">
+            <h2>Slot A</h2>
+            <div class="table-header">
+                <div class="header__item">08:15 AM <br>- 09:30 AM</div>
+                <div class="header__item">09:30 AM <br>- 09:35 AM</div>
+                <div class="header__item">09:35 AM <br>- 10:50 AM</div>
+                <div class="header__item">10:50 AM <br>- 11:00 AM</div>
+                <div class="header__item">11:00 AM <br>- 12:15 PM</div>
+                <div class="header__item">12:15 PM <br>- 12:20 PM</div>
+                <div class="header__item">12:20 PM <br>- 01:35 PM</div>
+            </div>
+            <div class="table-content">
+                <div class="table-row">		
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 1 and period.SubPeriod.Slot == 'A' %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 3 and period.SubPeriod.Slot == 'A' %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 5 and period.SubPeriod.Slot == 'A' %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 7 and period.SubPeriod.Slot == 'A' %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                </div>
+            </div>	
+        </div>
+        <div class="table" style="margin-top: 20px;">
+            <h2>Slot B</h2>
+            <div class="table-header">
+                <div class="header__item">12:20 PM <br>- 01:35 PM</div>
+                <div class="header__item">01:35 PM <br>- 01:40 PM</div>
+                <div class="header__item">01:40 PM <br>- 02:55 PM</div>
+                <div class="header__item">02:55 PM <br>- 03:05 PM</div>
+                <div class="header__item">03:05 PM <br>- 04:20 PM</div>
+                <div class="header__item">04:20 PM <br>- 04:25 PM</div>
+                <div class="header__item">04:25 PM <br>- 05:40 PM</div>
+            </div>
+            <div class="table-content">
+                <div class="table-row">		
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 1 and period.SubPeriod.Slot == 'B' %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 3 and period.SubPeriod.Slot == 'B' %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 5 and period.SubPeriod.Slot == 'B' %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
+                    <div class="table-data" style="font-size: 1rem;"><p>Break</p></div>
+                    <div class="table-data"><h3>{% for period in substitute_periods %}{% if period.SubPeriod.Period == 7 and period.SubPeriod.Slot == 'B' %}{{ period.Substitute.Name }}{% endif %}{% endfor %}</h3></div>
                 </div>
             </div>	
         </div>
