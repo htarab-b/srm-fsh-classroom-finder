@@ -131,8 +131,8 @@ function Staff_Editor() {
                 </button>
 
                 <p className="text-center text-sm text-gray-500">
-                    For Student timetable,
-                    <Link to={'../'} className="underline pl-1">Click Here</Link>
+                    For Editor,
+                    <Link to={'/editor'} className="underline pl-1">Click Here</Link>
                 </p>
                 </form>
             </div>

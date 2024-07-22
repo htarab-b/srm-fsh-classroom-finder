@@ -249,6 +249,11 @@ function Editor() {
                         >
                             Submit
                         </button>
+
+                        <p className="text-center text-sm text-gray-500">
+                            To add new staff details,
+                            <Link to={'./addstaff'} className="underline pl-1">Click Here</Link>
+                        </p>
                     </form>
             </div>
         </div>
