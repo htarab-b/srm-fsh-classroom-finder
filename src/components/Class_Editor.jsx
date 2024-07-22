@@ -511,7 +511,7 @@ function Class_Editor() {
                     </table>
                 </div>
 
-                <h3 className="text-2xl text-center mt-6">Handling Staffs</h3>
+                <h3 className="text-2xl text-center mt-6">Course handling Faculty Members</h3>
                 <div className="overflow-x-auto mt-2 flex justify-center">
                     <table className="bg-white min-w-full">
                         <thead>
