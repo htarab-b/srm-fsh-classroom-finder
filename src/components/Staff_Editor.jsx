@@ -13,14 +13,24 @@ function Staff_Editor() {
 
         let { data, error } = await supabase
             .from('staffs')
-            .insert({
-                EmpID: empID,
-                Name: name,
-                Email: email,
-                Department: department
-            });
-        if (error) {
-            console.error('Error adding staff :', error);
+            .select('*')
+            .eq('EmpID', empID)
+            .single();
+        if (data) {
+            console.log('Staff already exists');
+            window.alert('Staff already exists');
+        } else {
+            ({ data, error } = await supabase
+                .from('staffs')
+                .insert({
+                    EmpID: empID,
+                    Name: name,
+                    Email: email,
+                    Department: department
+                }));
+            if (error) {
+                console.error('Error adding staff :', error);
+            }
         }
         document.getElementById('staff-form').reset();
     }
