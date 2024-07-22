@@ -8,6 +8,7 @@ function Class_Editor() {
     const [classID, setClassID] = useState('');
 
     const [staffs, setStaffs] = useState([]);
+    const [classrooms, setClassrooms] = useState([]);
 
     const [classSubjects, setClassSubjects] = useState([]);
     const [staffSubjects, setStaffSubjects] = useState([]);
@@ -18,6 +19,7 @@ function Class_Editor() {
         async function fetchData() {
             await fetchClassid();
             await fetchAllStaffs();
+            await fetchAllClassrooms();
         }
         fetchData();
     }, [programme, course, year, section, order]);
@@ -161,6 +163,22 @@ function Class_Editor() {
         setStaffs(data);
     }
 
+    async function fetchAllClassrooms() {
+        let { data, error } = await supabase
+            .from('classrooms')
+            .select('*');
+        if (error) {
+            console.error('Error accessing Database: ', error);
+            return;
+        }
+        if (!data || !Array.isArray(data)) {
+            console.error('No data found or data is not an array');
+            return;
+        }
+
+        setClassrooms(data);
+    }
+
     const addPeriod = async (e, period) => {
         e.preventDefault();
 
@@ -174,6 +192,7 @@ function Class_Editor() {
             .single();
         if (error) {
             console.error('Error fetching Room ID:', error);
+            window.alert('Invalid Classroom Number');
             return;
         }
         const classroom_id = data.id;
@@ -473,6 +492,14 @@ function Class_Editor() {
                     )}
                 </datalist>
 
+                <datalist id="classrooms-datalist">
+                    {classrooms.map((item, key) =>
+                        <option key={key} value={item.RoomNo}>
+                            {item.RoomNo}
+                        </option>
+                    )}
+                </datalist>
+
                 <div className="overflow-x-auto mt-6">
                     <table className="min-w-full bg-white">
                         <tbody>
@@ -490,14 +517,14 @@ function Class_Editor() {
                                         <td key={period} className="py-5 px-8 border border-gray-200 text-sm lg:text-lg text-gray-700 text-center">
                                             {periodMap[period] ? (
                                                 <form onSubmit={(e) => addPeriod(e, period)} id={period}>
-                                                    <input type="text" name={`classroom-${period}`} id={`classroom-${period}`} placeholder='Room No' className="border border-gray-400 px-2 text-base w-full my-2" defaultValue={periodMap[period].classrooms.RoomNo} required />
+                                                    <input type="text" name={`classroom-${period}`} id={`classroom-${period}`} placeholder='Room No' list="classrooms-datalist" className="border border-gray-400 px-2 text-base w-full my-2" defaultValue={periodMap[period].classrooms.RoomNo} required />
                                                     <input type="text" name={`subject-${period}`} id={`subject-${period}`} placeholder='Subject' list="subjects-datalist" className="border border-gray-400 px-2 text-base w-full my-2" defaultValue={periodMap[period].subjects.Subject} required />
                                                     <button type="submit" className="bg-blue-600 px-5 py-2 text-white my-2">Add Period</button>
                                                     <button type="button" className="bg-red-600 px-5 py-2 text-white my-2" onClick={() => deletePeriod(period)}>Delete Period</button>
                                                 </form>
                                             ) : (
                                                 <form onSubmit={(e) => addPeriod(e, period)} id={period}>
-                                                    <input type="text" name={`classroom-${period}`} id={`classroom-${period}`} placeholder='Room No' className="border border-gray-400 px-2 text-base w-full my-2" required />
+                                                    <input type="text" name={`classroom-${period}`} id={`classroom-${period}`} placeholder='Room No' list="classrooms-datalist" className="border border-gray-400 px-2 text-base w-full my-2" required />
                                                     <input type="text" name={`subject-${period}`} id={`subject-${period}`} placeholder='Subject' list="subjects-datalist" className="border border-gray-400 px-2 text-base w-full my-2" required />
                                                     <button type="submit" className="bg-blue-600 px-5 py-2 text-white my-2">Add Period</button>
                                                     <button type="button" className="bg-red-600 px-5 py-2 text-white my-2" onClick={() => deletePeriod(period)}>Delete Period</button>
