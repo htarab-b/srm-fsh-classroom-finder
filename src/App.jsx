@@ -6,6 +6,7 @@ import Staff from './components/Staff';
 import Staff_Timetable from './components/Staff_Timetable';
 import Editor from './components/Editor';
 import Class_Editor from './components/Class_Editor';
+import Staff_Editor from './components/Staff_Editor';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route path="/staff/:empid" element={<Staff_Timetable />} />
       <Route path="/editor" element={<Editor />} />
       <Route path="/editor/:programme/:course/:year/:section/:order" element={<Class_Editor />} />
+      <Route path="/editor/addstaff" element={<Staff_Editor />} />
     </Route>
   )
 );
