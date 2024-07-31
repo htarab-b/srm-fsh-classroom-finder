@@ -119,7 +119,7 @@ function Student_Timetable() {
     return (
         <div className="flex justify-center items-center flex-wrap">
             {subjects.length === 0 ? (
-                <h2 className="text-sm lg:text-xl min-h-screen flex justify-center items-center">No subjects found. Contact your professor for further clarifications.</h2>
+                <h2 className="text-sm lg:text-xl min-h-screen flex justify-center items-center">No subjects found. Contact your professor for clarification.</h2>
             ) : (
                 <div className="w-full p-5">
                     <h2 className="text-lg lg:text-2xl text-center">{programme} {course} {year} Year - {section} Section</h2>
