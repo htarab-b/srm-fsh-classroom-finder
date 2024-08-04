@@ -2,63 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
-function Staff_Timetable() {
-    const { empid } = useParams();
+function Classroom_Timetable() {
+    const { roomno } = useParams();
 
-    const [staffName, setStaffName] = useState([]);
     const [periodHashmapsSlotA, setPeriodHashmapsSlotA] = useState([]);
     const [periodHashmapsSlotB, setPeriodHashmapsSlotB] = useState([]);
     const [dayOrder, setDayOrder] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
-            await fetchStaffid();
+            await fetchClassroom();
             await getDayOrder();
         }
         fetchData();
     }, []);
 
-    async function fetchStaffid() {
+    async function fetchClassroom() {
         const { data, error } = await supabase
-        .from('staffs')
-        .select('id, Name')
-        .eq('EmpID', empid);
+        .from('classrooms')
+        .select('id')
+        .eq('RoomNo', roomno);
 
         if (error) {
         console.error(error);
         } else {
-        const staffID = data.map(item => item.id);
+        const roomNo = data.map(item => item.id);
 
         let periodMapsSlotA = [];
         for (let i = 1; i <= 5; i++) {
-            const periods = await fetchPeriods(staffID, i, 'A');
+            const periods = await fetchPeriods(roomNo, i, 'A');
             periodMapsSlotA.push(periods);
         }
         setPeriodHashmapsSlotA(periodMapsSlotA);
 
         let periodMapsSlotB = [];
         for (let i = 1; i <= 5; i++) {
-            const periods = await fetchPeriods(staffID, i, 'B');
+            const periods = await fetchPeriods(roomNo, i, 'B');
             periodMapsSlotB.push(periods);
         }
         setPeriodHashmapsSlotB(periodMapsSlotB);
-
-        const staffName = data.map(item => item.Name);
-        setStaffName(staffName);
         }
     }
 
-    async function fetchPeriods(staffID, order, slot) {
-        if (staffID.length === 0) return;
+    async function fetchPeriods(roomNo, order, slot) {
+        if (roomNo.length === 0) return;
         const { data, error } = await supabase
         .from('periods')
         .select(`
             Period,
             subjects:Subject_id(Subject),
             classes:Class_id(*),
-            classrooms:ClassRoom_id(RoomNo)
+            staffs:Staff_id(*)
         `)
-        .in('Staff_id', staffID)
+        .in('ClassRoom_id', roomNo)
         .eq('Slot', slot)
         .eq('Order', order);
 
@@ -106,11 +102,11 @@ function Staff_Timetable() {
 
     return (
         <div className="flex justify-center items-center flex-wrap">
-            {empid.length === 0 ? (
+            {roomno.length === 0 ? (
                 <h2 className="text-sm lg:text-xl min-h-screen flex justify-center items-center">No subjects found. Contact your professor for further clarifications.</h2>
             ) : (
                 <div className="w-full p-5">
-                    <h2 className="text-2xl lg:text-4xl text-center">{staffName}</h2>
+                    <h2 className="text-2xl lg:text-4xl text-center">{roomno} Timetable</h2>
                     <div className="overflow-x-auto mt-6">
                         <h3 className="text-center text-lg lg:text-2xl mx-auto">Slot A</h3>
                         <table className="min-w-full bg-white">
@@ -160,7 +156,7 @@ function Staff_Timetable() {
                                             <td key={period} className="py-5 px-8 border border-gray-200 text-sm lg:text-lg text-gray-700 text-center" style={index + 1 === dayOrder ? { background: '#93c5fd' } : {}}>
                                                 {periodMap[period] ? (
                                                     <>
-                                                        <div className="pb-2">{periodMap[period].classrooms.RoomNo}</div>
+                                                        <div className="pb-2">{periodMap[period].staffs.Name}</div>
                                                         <div className="pb-2">{periodMap[period].subjects.Subject}</div>
                                                         <div>{periodMap[period].classes.Year} {periodMap[period].classes.Programme} {periodMap[period].classes.Course} {periodMap[period].classes.Section}</div>
                                                     </>
@@ -180,4 +176,4 @@ function Staff_Timetable() {
     );
 }
 
-export default Staff_Timetable;
+export default Classroom_Timetable;
