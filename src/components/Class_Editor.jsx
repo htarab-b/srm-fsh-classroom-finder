@@ -140,7 +140,10 @@ function Class_Editor() {
             return {};
         } else {
             const hashmap = data.reduce((map, item) => {
-                map[item.Period] = item;
+                if (!map[item.Period]) {
+                    map[item.Period] = []; // Initialize an array for this period
+                }
+                map[item.Period].push(item); // Add the item to the array
                 return map;
             }, {});
             return hashmap;
@@ -199,7 +202,7 @@ function Class_Editor() {
 
         ({ data, error } = await supabase
             .from('subjects')
-            .select('id, Staff_id')
+            .select('id, Staff_id, Type')
             .eq('Subject', subject)
             .eq('Class_id', classID[0])
             .single());
@@ -209,6 +212,7 @@ function Class_Editor() {
         }
         const subject_id = data.id;
         const staff_id = data.Staff_id;
+        const subject_type = data.Type;
 
         // Check if the period already exists
         ({ data, error } = await supabase
@@ -226,7 +230,7 @@ function Class_Editor() {
         console.log(data);
 
         if (data) { // Perform update operation
-            if (data.ClassRoom_id !== classroom_id) { // Check Classroom availability
+            if (data.ClassRoom_id !== classroom_id && subject_type === "Major") { // Check Classroom availability
                 let { classroomData, error } = await supabase
                     .from('periods')
                     .select('*')
@@ -245,7 +249,7 @@ function Class_Editor() {
                 }
             }
             console.log(data);
-            if (data.Staff_id !== staff_id) { // Check Staff availability
+            if (data.Staff_id !== staff_id && subject_type === "Major") { // Check Staff availability
                 let { staffData, error } = await supabase
                     .from('periods')
                     .select('*')
@@ -279,41 +283,42 @@ function Class_Editor() {
                 console.error('Error updating period :', error);
             }
         } else { // Perform insert operation
+            if (subject_type === "Major") {
+                // Check Classroom Availablity
+                ({ data, error } = await supabase
+                    .from('periods')
+                    .select('*')
+                    .eq('Order', order)
+                    .eq('Slot', slot[0])
+                    .eq('Period', period)
+                    .eq('ClassRoom_id', classroom_id)
+                    .single());
+                if (error && error.code !== 'PGRST116') {
+                    console.error('Error checking Database :', error);
+                    return;
+                }
+                if (data) {
+                    window.alert('Classroom Not Available');
+                    return;
+                }
 
-            // Check Classroom Availablity
-            ({ data, error } = await supabase
-                .from('periods')
-                .select('*')
-                .eq('Order', order)
-                .eq('Slot', slot[0])
-                .eq('Period', period)
-                .eq('ClassRoom_id', classroom_id)
-                .single());
-            if (error && error.code !== 'PGRST116') {
-                console.error('Error checking Database :', error);
-                return;
-            }
-            if (data) {
-                window.alert('Classroom Not Available');
-                return;
-            }
-
-            // Check Staff Availablity
-            ({ data, error } = await supabase
-                .from('periods')
-                .select('*')
-                .eq('Order', order)
-                .eq('Slot', slot[0])
-                .eq('Period', period)
-                .eq('Staff_id', staff_id)
-                .single());
-            if (error && error.code !== 'PGRST116') {
-                console.error('Error checking Database :', error);
-                return;
-            }
-            if (data) {
-                window.alert('Staff Not Available');
-                return;
+                // Check Staff Availablity
+                ({ data, error } = await supabase
+                    .from('periods')
+                    .select('*')
+                    .eq('Order', order)
+                    .eq('Slot', slot[0])
+                    .eq('Period', period)
+                    .eq('Staff_id', staff_id)
+                    .single());
+                if (error && error.code !== 'PGRST116') {
+                    console.error('Error checking Database :', error);
+                    return;
+                }
+                if (data) {
+                    window.alert('Staff Not Available');
+                    return;
+                }
             }
 
             // Insert into Database
@@ -337,20 +342,20 @@ function Class_Editor() {
     };
 
     const deletePeriod = async (period) => {
-    let { data, error } = await supabase
-        .from('periods')
-        .delete()
-        .eq('Class_id', classID[0])
-        .eq('Order', order)
-        .eq('Slot', slot[0])
-        .eq('Period', period);
-    if (error) {
-        console.error('Error deleting period :', error);
+        let { data, error } = await supabase
+            .from('periods')
+            .delete()
+            .eq('Class_id', classID[0])
+            .eq('Order', order)
+            .eq('Slot', slot[0])
+            .eq('Period', period);
+        if (error) {
+            console.error('Error deleting period :', error);
+        }
+        await fetchClassid(); // Refresh the data after deletion
+        await fetchClassPeriods(classID, order);
+        document.getElementById(period).reset();
     }
-    await fetchClassid(); // Refresh the data after deletion
-    await fetchClassPeriods(classID, order);
-    document.getElementById(period).reset();
-}
 
     const addSubject = async (e) =>{
         e.preventDefault();
@@ -553,14 +558,33 @@ function Class_Editor() {
                         <tbody>
                             {staffSubjects.map((staffSubject, index) => (
                                 <tr key={index}>
-                                    <th className="py-5 px-2 border border-gray-200 bg-blue-600 text-center text-sm lg:text-lg font-medium text-white tracking-wider w-44"><p className="mb-3">{staffSubject.staffs.Name}</p><p className="mt-3 text-sm">{staffSubject.Subject}</p><p><button className="bg-red-600 px-3 py-1 text-white mx-2 text-xs mt-4" onClick={() => deleteSubject(staffSubject.id)}>Delete Subject</button></p></th>
+                                    <th className="py-5 px-2 border border-gray-200 bg-blue-600 text-center text-sm lg:text-lg font-medium text-white tracking-wider w-44">
+                                        <p className="mb-3">{staffSubject.staffs.Name}</p>
+                                        <p className="mt-3 text-sm">{staffSubject.Subject}</p>
+                                        <p>
+                                            <button
+                                                className="bg-red-600 px-3 py-1 text-white mx-2 text-xs mt-4"
+                                                onClick={() => deleteSubject(staffSubject.id)}
+                                            >
+                                                Delete Subject
+                                            </button>
+                                        </p>
+                                    </th>
                                     {[1, 2, 3, 4].map(period => (
                                         <td key={period} className="border border-gray-200 text-sm lg:text-lg text-gray-700 text-center">
                                             {staffSubject.staffPeriods && staffSubject.staffPeriods[period] ? (
-                                                <div className="py-5 px-8 " style={classID == staffSubject.staffPeriods[period].classes.id ? {background: '#93c5fd'} : {}}>
-                                                    <div className="pb-2">{staffSubject.staffPeriods[period].classrooms.RoomNo}</div>
-                                                    <div className="pb-2">{staffSubject.staffPeriods[period].subjects.Subject}</div>
-                                                    <div>{staffSubject.staffPeriods[period].classes.Year} {staffSubject.staffPeriods[period].classes.Programme} {staffSubject.staffPeriods[period].classes.Course} {staffSubject.staffPeriods[period].classes.Section}</div>
+                                                <div>
+                                                    {staffSubject.staffPeriods[period].map((periodItem, idx) => (
+                                                        <div
+                                                            key={idx}
+                                                            className="py-5 px-8 mb-2"
+                                                            style={classID == periodItem.classes.id ? { background: '#93c5fd' } : {}}
+                                                        >
+                                                            <div className="pb-2">{periodItem.classrooms.RoomNo}</div>
+                                                            <div className="pb-2">{periodItem.subjects.Subject}</div>
+                                                            <div>{periodItem.classes.Year} {periodItem.classes.Programme} {periodItem.classes.Course} {periodItem.classes.Section}</div>
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             ) : (
                                                 '-'

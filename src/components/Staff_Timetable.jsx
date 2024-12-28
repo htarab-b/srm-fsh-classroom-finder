@@ -66,11 +66,14 @@ function Staff_Timetable() {
         console.error(error);
         return {};
         } else {
-        const hashmap = data.reduce((map, item) => {
-            map[item.Period] = item;
-            return map;
-        }, {});
-        return hashmap;
+            const hashmap = data.reduce((map, item) => {
+                if (!map[item.Period]) {
+                    map[item.Period] = []; // Initialize an array for this period
+                }
+                map[item.Period].push(item); // Add the item to the array
+                return map;
+            }, {});
+            return hashmap;
         }
     }
 
@@ -124,17 +127,30 @@ function Staff_Timetable() {
                                 </tr>
                                 {periodHashmapsSlotA.map((periodMap, index) => (
                                     <tr key={index}>
-                                        <th className="py-5 px-2 border border-gray-200 bg-blue-600 text-center text-sm lg:text-xl font-medium text-white uppercase tracking-wider" style={index + 1 === dayOrder ? { borderColor: '#93c5fd' } : {}}>{index + 1}</th>
+                                        <th
+                                            className="py-5 px-2 border border-gray-200 bg-blue-600 text-center text-sm lg:text-xl font-medium text-white uppercase tracking-wider"
+                                            style={index + 1 === dayOrder ? { borderColor: '#93c5fd' } : {}}
+                                        >
+                                            {index + 1}
+                                        </th>
                                         {[1, 2, 3, 4].map(period => (
-                                            <td key={period} className="py-5 px-8 border border-gray-200 text-sm lg:text-lg text-gray-700 text-center" style={index + 1 === dayOrder ? { background: '#93c5fd' } : {}}>
-                                                {periodMap[period] ? (
-                                                    <>
-                                                        <div className="pb-2">{periodMap[period].classrooms.RoomNo}</div>
-                                                        <div className="pb-2">{periodMap[period].subjects.Subject}</div>
-                                                        <div>{periodMap[period].classes.Year} {periodMap[period].classes.Programme} {periodMap[period].classes.Course} {periodMap[period].classes.Section}</div>
-                                                    </>
+                                            <td
+                                                key={period}
+                                                className="py-5 px-8 border border-gray-200 text-sm lg:text-lg text-gray-700 text-center"
+                                                style={index + 1 === dayOrder ? { background: '#93c5fd' } : {}}
+                                            >
+                                                {periodMap[period] && periodMap[period].length > 0 ? (
+                                                    periodMap[period].map((periodItem, idx) => (
+                                                        <div key={idx} className="py-4">
+                                                            <div className="pb-1 font-semibold">{periodItem.classrooms.RoomNo}</div>
+                                                            <div className="pb-1 text-blue-700 font-semibold">{periodItem.subjects.Subject}</div>
+                                                            <div>
+                                                                {periodItem.classes.Year} {periodItem.classes.Programme} {periodItem.classes.Course} {periodItem.classes.Section}
+                                                            </div>
+                                                        </div>
+                                                    ))
                                                 ) : (
-                                                '-'
+                                                    '-'
                                                 )}
                                             </td>
                                         ))}
@@ -155,17 +171,30 @@ function Staff_Timetable() {
                                 </tr>
                                 {periodHashmapsSlotB.map((periodMap, index) => (
                                     <tr key={index}>
-                                        <th className="py-5 px-2 border border-gray-200 bg-blue-600 text-center text-sm lg:text-xl font-medium text-white uppercase tracking-wider" style={index + 1 === dayOrder ? { borderColor: '#93c5fd' } : {}}>{index + 1}</th>
+                                        <th
+                                            className="py-5 px-2 border border-gray-200 bg-blue-600 text-center text-sm lg:text-xl font-medium text-white uppercase tracking-wider"
+                                            style={index + 1 === dayOrder ? { borderColor: '#93c5fd' } : {}}
+                                        >
+                                            {index + 1}
+                                        </th>
                                         {[1, 2, 3, 4].map(period => (
-                                            <td key={period} className="py-5 px-8 border border-gray-200 text-sm lg:text-lg text-gray-700 text-center" style={index + 1 === dayOrder ? { background: '#93c5fd' } : {}}>
-                                                {periodMap[period] ? (
-                                                    <>
-                                                        <div className="pb-2">{periodMap[period].classrooms.RoomNo}</div>
-                                                        <div className="pb-2">{periodMap[period].subjects.Subject}</div>
-                                                        <div>{periodMap[period].classes.Year} {periodMap[period].classes.Programme} {periodMap[period].classes.Course} {periodMap[period].classes.Section}</div>
-                                                    </>
+                                            <td
+                                                key={period}
+                                                className="py-5 px-8 border border-gray-200 text-sm lg:text-lg text-gray-700 text-center"
+                                                style={index + 1 === dayOrder ? { background: '#93c5fd' } : {}}
+                                            >
+                                                {periodMap[period] && periodMap[period].length > 0 ? (
+                                                    periodMap[period].map((periodItem, idx) => (
+                                                        <div key={idx} className="py-4">
+                                                            <div className="pb-1 font-semibold">{periodItem.classrooms.RoomNo}</div>
+                                                            <div className="pb-1 text-blue-700 font-semibold">{periodItem.subjects.Subject}</div>
+                                                            <div>
+                                                                {periodItem.classes.Year} {periodItem.classes.Programme} {periodItem.classes.Course} {periodItem.classes.Section}
+                                                            </div>
+                                                        </div>
+                                                    ))
                                                 ) : (
-                                                '-'
+                                                    '-'
                                                 )}
                                             </td>
                                         ))}
