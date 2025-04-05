@@ -86,49 +86,31 @@ function Staff_Editor() {
                         required
                     >
                         <option value="" disabled selected>Select</option>
-                        <option value="English">English</option>
-                        <option value="Journalism and Mass Communication">Journalism and Mass Communication</option>
-                        <option value="Computer Applications">Computer Applications</option>
-                        <option value="Data Science">Data Science</option>
-                        <option value="Accounting & Finance">Accounting & Finance</option>
-                        <option value="Commerce">Commerce</option>
-                        <option value="Corporate Secretaryship">Corporate Secretaryship</option>
-                        <option value="Finance and Taxation">Finance and Taxation</option>
-                        <option value="Information System and Management">Information System and Management</option>
-                        <option value="Professional Accounting">Professional Accounting</option>
-                        <option value="Banking, Financial Services, and Insurance">Banking, Financial Services, and Insurance</option>
-                        <option value="International Accounting & Finance">International Accounting & Finance</option>
-                        <option value="Biological Science">Biological Science</option>
-                        <option value="Commerce & Accounting">Commerce & Accounting</option>
-                        <option value="Computer Science">Computer Science</option>
-                        <option value="Economics">Economics</option>
-                        <option value="Mathematics">Mathematics</option>
-                        <option value="Physical Science">Physical Science</option>
-                        <option value="Social Science">Social Science</option>
-                        <option value="Tamil">Tamil</option>
-                        <option value="Chemistry">Chemistry</option>
-                        <option value="Hotel & Catering Management">Hotel & Catering Management</option>
+                        <option value="Biochemistry">Biochemistry</option>
                         <option value="Biotechnology">Biotechnology</option>
-                        <option value="Computer Science Specialization in Cyber Security">Computer Science Specialization in Cyber Security</option>
+                        <option value="Career Guidance">Career Guidance</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Commerce">Commerce</option>
+                        <option value="Computer Applications">Computer Applications</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Corporate Secretaryship and Accounting & Finance">Corporate Secretaryship and Accounting & Finance</option>
                         <option value="Defence and Strategic Studies">Defence and Strategic Studies</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Education">Education</option>
+                        <option value="English">English</option>
                         <option value="Fashion Designing">Fashion Designing</option>
+                        <option value="French">French</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Journalism and Mass Communication">Journalism and Mass Communication</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Mathematics & Statistics">Mathematics & Statistics</option>
                         <option value="Physical Education, Health Education and Sports">Physical Education, Health Education and Sports</option>
+                        <option value="Physics">Physics</option>
                         <option value="Psychology">Psychology</option>
-                        <option value="Statistics">Statistics</option>
+                        <option value="Social Work">Social Work</option>
+                        <option value="Tamil">Tamil</option>
                         <option value="Visual Communication">Visual Communication</option>
-                        <option value="Basic French">Basic French</option>
-                        <option value="Certified Financial Management">Certified Financial Management</option>
-                        <option value="Counter-Terrorism">Counter-Terrorism</option>
-                        <option value="Financial Management">Financial Management</option>
-                        <option value="Fire Fighting and Fire Safety">Fire Fighting and Fire Safety</option>
-                        <option value="First Aid and Safety Management">First Aid and Safety Management</option>
-                        <option value="Hotel Management and Catering Science">Hotel Management and Catering Science</option>
                         <option value="Yoga">Yoga</option>
-                        <option value="Applied Data Science">Applied Data Science</option>
-                        <option value="Organic Chemistry">Organic Chemistry</option>
-                        <option value="Disaster Management">Disaster Management</option>
-                        <option value="Master of Social Work">Master of Social Work</option>
-                        <option value="Culinary Arts">Culinary Arts</option>
                     </select>
                     </div>
                 </div>
@@ -141,7 +123,7 @@ function Staff_Editor() {
                 </button>
 
                 <p className="text-center text-sm text-gray-500">
-                    For Editor,
+                    For Class Editor,
                     <Link to={'/editor'} className="underline pl-1">Click Here</Link>
                 </p>
                 </form>

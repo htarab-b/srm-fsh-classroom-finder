@@ -442,6 +442,7 @@ function Class_Editor() {
             <div className="w-full p-5">
                 <h2 className="text-lg lg:text-2xl text-center">{programme} {course}</h2>
                 <form action="" onSubmit={(e) => changeClass(e)} className="flex justify-center items-center">
+                    <Link to={'/editor'} className="mr-5 px-5 py-2 bg-blue-600 text-white">Back</Link>
                     <label className="mr-3">Year</label>
                     <select
                         id="Year"
@@ -474,11 +475,11 @@ function Class_Editor() {
                     <button type="submit" className="ml-5 px-5 py-2 bg-blue-600 text-white">Switch</button>
                 </form>
                 <nav className="flex justify-center p-5 mt-3">
-                    <Link to={`/editor/${programme}/${course}/${year}/${section}/1`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '1' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 1</Link>
-                    <Link to={`/editor/${programme}/${course}/${year}/${section}/2`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '2' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 2</Link>
-                    <Link to={`/editor/${programme}/${course}/${year}/${section}/3`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '3' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 3</Link>
-                    <Link to={`/editor/${programme}/${course}/${year}/${section}/4`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '4' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 4</Link>
-                    <Link to={`/editor/${programme}/${course}/${year}/${section}/5`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '5' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 5</Link>
+                    <a href={`/editor/${programme}/${course}/${year}/${section}/1`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '1' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 1</a>
+                    <a href={`/editor/${programme}/${course}/${year}/${section}/2`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '2' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 2</a>
+                    <a href={`/editor/${programme}/${course}/${year}/${section}/3`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '3' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 3</a>
+                    <a href={`/editor/${programme}/${course}/${year}/${section}/4`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '4' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 4</a>
+                    <a href={`/editor/${programme}/${course}/${year}/${section}/5`} className="p-5 bg-slate-200 mx-2 hover:bg-blue-600 hover:text-white transition-all duration-300" style={order === '5' ? {background:'#2563eb', color:'#fff'} : {}}>Day Order 5</a>
                 </nav>
 
                 <datalist id="subjects-datalist">
